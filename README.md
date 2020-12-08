@@ -7,7 +7,7 @@ also known by MCαβ (monte carlo alpha beta, see https://www.chessprogramming.o
 I dont know. they say its a hybrid search that uses alpha beta search and monte carlo and it uses the lc0 backend. so I make my own backend (for now only with tensorflow with cppflow project but it is slow so maybe Ill use it too); and it doesnt specify if its the mcαβ.
 
 ## current workings ##
-the problem I have now is to convert my hdh5 keras files to pb tensorflow files. if you know how to do this on tensorflow 2.3 let me know on issues!
+the problem I have now is to convert my hdh5 keras files to pb tensorflow files. if you know how to do this on tensorflow 2.x let me know on issues!
 
 ### special thanks ###
 thc chess library (I use the retro-sargon one https://github.com/billforsternz/retro-sargon) from Bill Forster.              
