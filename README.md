@@ -17,5 +17,5 @@ thc chess library (I use the retro-sargon one https://github.com/billforsternz/r
 cppflow for the tensorflow backend (https://github.com/serizba/cppflow) from serizba             
 and the discord of engine-programming and leela chess zero
 
-# why the code is messy? #
+### why the code is messy? ###
 I learn c++ on the go with this project. its the first time I program in c++ and I started this project a week ago. 
