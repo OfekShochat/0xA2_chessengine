@@ -12,6 +12,9 @@ if you know how to do something from the above let me know on issues with the "s
 ### is this like allie chess? ###
 I dont know. they say its a hybrid search that uses alpha beta search and monte carlo and it uses the lc0 backend. so I make my own backend (for now only with tensorflow and the  cppflow project but it is slow so maybe Ill use it too); and it doesnt specify if its the mcαβ.
 
+### help (training wise) ###
+you can train tensorflow models (value networks only for now)(you can make keras ones but I dont know how to convert them to pb file and use it) and then use it with this engine!
+
 ### special thanks ###
 thc chess library (I use the retro-sargon one https://github.com/billforsternz/retro-sargon) from Bill Forster.              
 cppflow for the tensorflow backend (https://github.com/serizba/cppflow) from serizba             
