@@ -4,7 +4,7 @@
 also known by MCαβ (monte carlo alpha beta, see https://www.chessprogramming.org/MC%CE%B1%CE%B2)
 
 ## current workings ##
-1. convert my hdh5 keras files to pb tensorflow files with tensorflow 2.x. (tried https://medium.com/@sebastingarcaacosta/how-to-export-a-tensorflow-2-x-keras-model-to-a-frozen-and-optimized-graph-39740846d9eb but then: "Exception thrown at 0x00007FFAF05B1F70 (tensorflow.dll) in a0xa.exe: 0xC0000005: Access violation reading location 0x0000000000000090.")           
+1. converted! now, I cant find the init function for the model (in pure tensorflow models it is called "init" but I cant find it within the operations of the model)   
 2. when writing "position " and then "fen" or something else it finds the first, "position" and then in the next iteration it makes cmd to "fen" for some reason.
 
 if you know how to do something from the above let me know on issues with the "solution" label!  
