@@ -7,9 +7,9 @@ using namespace std;
 class Node {
     /* Node class. contains: the mean value(q), Number of visits value (n), total value(w) and the functions to update them.
         param b:
-            board fen.
+            board in Forsyth (fen) format.
         param m:
-            move uci.
+            move in uci format.
             defaults to "" for root node
         param p:
             parent node.
