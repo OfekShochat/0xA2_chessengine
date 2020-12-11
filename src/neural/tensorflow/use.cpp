@@ -10,6 +10,10 @@
 using namespace std;
 
 Net::Net(string path) : model(path) {
+	vector<string> d = model.get_operations();
+	for (int i = 0; i < d.size(); i++) {
+		cout << d[i] << endl;
+	}
 	model.init();
 }
 
@@ -64,8 +68,8 @@ list<float> Net::make(string fen) {
 }
 
 float Net::predict(string fen) {
-	Tensor input{ model, "input" };
-	Tensor output{ model, "output" };
+	Tensor input{ model, "x:0" };
+	Tensor output{ model, "Identity:0" };
 	list<float> d = make(fen);
 	vector<float_t> data;
 	copy(d.begin(), d.end(), data.begin());
