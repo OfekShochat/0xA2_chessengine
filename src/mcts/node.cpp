@@ -150,7 +150,7 @@ float Node::AB(string fen, float alpha, float beta, int depth) {
     cr.GenLegalMoveList(moves, check, mate, stalemate);
     for (auto& move : moves) {
         cr.PlayMove(move);
-        float score = 1-AB(cr.ForsythPublish(), -alpha, -beta, depth - 1);
+        float score = 1 - AB(cr.ForsythPublish(), -alpha, -beta, depth - 1);
         cr.PopMove(move);
         if (score >= beta)
             return beta;
