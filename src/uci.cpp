@@ -13,7 +13,8 @@ void uci::loop() {
 
 	while (true) {
 		string cmd;
-		cin >> cmd;
+		getline(cin, cmd);
+
 		//istringstream& ss(cmd);
 
 		string first = cmd.substr(0, cmd.find(" "));
@@ -36,6 +37,9 @@ void uci::loop() {
 		else if (first == "position") {
 			fen = processpos(cmd);
 		}
+		else if (first == "print") {
+			cout << fen << endl;
+		}
 		else {
 			cout << "invalid command" << endl;
 		}
@@ -46,14 +50,15 @@ void uci::uciok() {
 	cout << "id name 0xA2" << endl;
 	cout << "id author Ofek Shochat" << endl;
 	cout << "option name netPath type pathString default ./networks/net.pb" << endl;
+	cout << "option name rolloutPly type int default 5" << endl;
 	cout << "uciok" << endl;
 }
 
 bool uci::init() {
 	// here should be net object definition(check in here function if it has been definedand if not, define it).
-	ifstream infile("./networks/net.pb");
+	ifstream infile("C:\\Users\\User\\0xA2_chessengine-project\\x64\\Release\\net.pb");
 	if (infile) {
-		nn = new Net("./networks/net.pb");
+		nn = new Net("C:\\Users\\User\\0xA2_chessengine-project\\x64\\Release\\net.pb");
 		return true;
 	}
 	return false;
@@ -123,7 +128,7 @@ string uci::processpos(string cmd) {
 	bool more = false;
 	bool moves = false;
 
-	string ff;
+	string ff = "";
 	tokens >> t;
 	while (tokens >> t) {
 		if (t == "startpos")
@@ -133,7 +138,7 @@ string uci::processpos(string cmd) {
 		}
 
 		else if (f) {
-			ff = t;
+			ff = cmd.substr(cmd.find("fen ") + 4, cmd.find("-"));
 			more = true;
 		}
 		else if (more) {
@@ -141,7 +146,13 @@ string uci::processpos(string cmd) {
 				moves = true;
 		}
 		else if (moves) {
-			
+			thc::ChessRules cr;
+			const char* c = ff.c_str();
+			cr.Forsyth(c);
+			thc::Move mv;
+			const char* d = t.c_str();
+			mv.TerseIn(&cr, c);
+			ff = cr.ForsythPublish();
 		}
 	}
 	return ff;
