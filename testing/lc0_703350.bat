@@ -1,0 +1,1 @@
+D:\lc0-v0.26.1-windows-gpu-nvidia-cuda\lc0.exe -w D:\lc0-v0.26.1-windows-gpu-nvidia-cuda\703350.pb.gz

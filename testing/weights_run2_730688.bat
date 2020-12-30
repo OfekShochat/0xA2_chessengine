@@ -1,0 +1,1 @@
+D:\lc0-v0.26.1-windows-gpu-nvidia-cuda\lc0.exe -w C:\Users\o\Downloads\weights_run2_730688.pb.gz
