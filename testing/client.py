@@ -90,5 +90,5 @@ for i in range(10000):
     open("game.pgn", "a+").write("[Black \"{}\"]\n".format(engine2.name))
     b = chess.Board(book_choice)
     bb = b.variation_san([chess.Move.from_uci(m) for m in moves]) 
-    open("games.pgn", "a+").write(str(bb) + "\n\n")
+    open("game.pgn", "a+").write(str(bb) + "\n\n")
     client("127.0.0.1", 41378, open("game.pgn", "rb").read())
