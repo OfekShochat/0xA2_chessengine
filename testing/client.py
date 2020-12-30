@@ -99,15 +99,15 @@ for i in range(10000):
     r = board.result()
     
     if wc < 0:
-        open("games.pgn", "w+").write("[Result \"0-1\"]\n")
+        open("game.pgn", "w+").write("[Result \"0-1\"]\n")
     elif bc < 0:
-        open("games.pgn", "w+").write("[Result \"1-0\"]\n")
+        open("game.pgn", "w+").write("[Result \"1-0\"]\n")
     else:
-        open("games.pgn", "w+").write("[Result \"{}\"]\n".format(r))   
-    open("games.pgn", "a+").write("[FEN \"{}\"]\n".format(book_choice[:book_choice.find("\n")]))
-    open("games.pgn", "a+").write("[White \"{}\"]\n".format(engine1.name))
-    open("games.pgn", "a+").write("[Black \"{}\"]\n".format(engine2.name))
+        open("game.pgn", "w+").write("[Result \"{}\"]\n".format(r))   
+    open("game.pgn", "a+").write("[FEN \"{}\"]\n".format(book_choice[:book_choice.find("\n")]))
+    open("game.pgn", "a+").write("[White \"{}\"]\n".format(engine1.name))
+    open("game.pgn", "a+").write("[Black \"{}\"]\n".format(engine2.name))
     b = chess.Board(book_choice)
     bb = b.variation_san([chess.Move.from_uci(m) for m in moves]) 
-    open("games.pgn", "a+").write(str(bb) + "\n\n")
-    client("127.0.0.1", 41378, open("games.pgn", "rb").read())
+    open("game.pgn", "a+").write(str(bb) + "\n\n")
+    client("127.0.0.1", 41378, open("game.pgn", "rb").read())
