@@ -8,8 +8,8 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         data = self.request.recv(1024)
         for line in data.decode('utf-8').split('\n'):
-            open("games5.pgn", "a+").write(line)
-        open("games5.pgn", "a+").write("\n\n")
+            open("games.pgn", "a+").write(line)
+        open("games.pgn", "a+").write("\n\n")
 
 class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
