@@ -7,8 +7,6 @@ if you want to talk with me, you can join here! https://discord.gg/cTeagCWtMA
 
 ## current workings ##
 1. making the neural network lib for the engine. I know something with the neuron code is wrong, do you know? something with the weights
-2. std::thread - error C2893: Failed to specialize function template 'unknown-type std::invoke(_Callable &&,_Ty1 &&,_Types2 &&...) noexcept(<expr>)'
-error C2780: 'unknown-type std::invoke(_Callable &&) noexcept(<expr>)': expects 1 arguments - 2 provided
 
 if you know how to do something from the above let me know on issues with the "solution" label!  
 
