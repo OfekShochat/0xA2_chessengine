@@ -8,7 +8,7 @@ if you want to talk with me, you can join here! https://discord.gg/cTeagCWtMA
 ## current workings ##
 1. making the neural network lib for the engine. I know something with the neuron code is wrong, do you know? something with the weights
 the plan is to go by this:
-![alt text](https://github.com/OfekShochat/0xA2_chessengine/threaded_chessengine.png)
+![alt text](https://github.com/OfekShochat/0xA2_chessengine/blob/master/threaded_chessengine.png)
 
 if you know how to do something from the above let me know on issues with the "solution" label!  
 
