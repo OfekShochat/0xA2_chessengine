@@ -3,11 +3,7 @@
 #include <iostream>
 #include <string>
 
-SearchThread::SearchThread(Node* SelectedNode) {
-    selected = SelectedNode;
-}
-
-void SearchThread::Start() {
+void SearchThread::Start(Node* selected) {
     Node* AB = selected->select_AB();
     selected->update(selected->AB_evaluate());
     selected->expand();

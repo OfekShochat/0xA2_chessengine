@@ -39,7 +39,7 @@ Search::Search(string b, int d, int n, int tt) {
 
 Node* Search::go() {
     auto st = high_resolution_clock::now();
-    list<SearchThread*> threads = {};
+    list<std::thread*> threads = {};
     evaluator* eval = new evaluator();
 
     int t_depth;
@@ -51,10 +51,10 @@ Node* Search::go() {
 
         if (4) { // activeThreads constant 4
             Node* selected = root->select();
+            selected->ThreadMaster = true;
             selected->n += 1;
-            SearchThread* t = new SearchThread(selected);
-            thread* t1 = new thread(&t->Start);
-            threads.push_back(t);
+            thread* t1 = new thread(&SearchThread::Start, selected);
+            threads.push_back(t1);
         }
         /*
         t_depth = root->root_depth();
