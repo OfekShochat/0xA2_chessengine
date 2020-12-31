@@ -20,6 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import socket
 import threading
 import socketserver
+import requests
+
+r = requests.get("https://raw.githubusercontent.com/OfekShochat/0xA2_chessengine/master/testing/book.txt", allow_redirects=True)
+open('book.txt', 'wb').write(r.content)
 
 def client(ip, port, message):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -43,14 +47,16 @@ class engine:
         self.rating = 0 
         self.games = 0
         self.en = ce.SimpleEngine.popen_uci(path)
+stock = engine("stock", r"C:\Users\User\Downloads\stockfish_12_win_x64_bmi2\stockfish_20090216_x64_bmi2.exe")
+lc0 = engine("lc0", r"C:\Users\User\Downloads\lc0-v0.26.3-windows-gpu-nvidia-cuda\lc0.exe")
+#reference_stockfish = engine("stockfish", "D:\\stockfish_12_win_x64_bmi2\\stockfish_20090216_x64_bmi2.exe")
+#lc0_new = engine("lc0_new", "lc0_new.bat")
+#lc0_run2_730357 = engine("lc0_run2_730357", "lc0_run2_730357.bat")
+#lc0_703350 = engine("lc0_703350", "lc0_703350.bat")
+#lc0_730688 = engine("weights_run2_730688", "weights_run2_730688.bat")
 
-reference_stockfish = engine("stockfish", "D:\\stockfish_12_win_x64_bmi2\\stockfish_20090216_x64_bmi2.exe")
-lc0_new = engine("lc0_new", "lc0_new.bat")
-lc0_run2_730357 = engine("lc0_run2_730357", "lc0_run2_730357.bat")
-lc0_703350 = engine("lc0_703350", "lc0_703350.bat")
-lc0_730688 = engine("weights_run2_730688", "weights_run2_730688.bat")
-
-engines = [reference_stockfish, lc0_new, lc0_run2_730357, lc0_703350, lc0_730688]
+#engines = [reference_stockfish, lc0_new, lc0_run2_730357, lc0_703350, lc0_730688]
+engines = [stock, lc0]
 
 book = open("book.txt", "r").readlines()
 st = time()
