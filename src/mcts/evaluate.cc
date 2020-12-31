@@ -85,6 +85,7 @@ float evaluator::evaluate(string board) {
 	if (cr.AttackedSquare(thc::d4, false))
 		evaluation -= 0.01;
 	if (cr.AttackedSquare(thc::d5, false))
+		evaluation -= 0.01;
 	//cout << evaluation << endl;
     return evaluation;
 }
