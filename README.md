@@ -7,10 +7,13 @@ if you want to talk with me, you can join here! https://discord.gg/cTeagCWtMA
 
 ## current workings ##
 1. making the neural network lib for the engine. I know something with the neuron code is wrong, do you know? something with the weights
-the plan is to go by this:
-![alt text](https://github.com/OfekShochat/0xA2_chessengine/blob/master/threaded_chessengine.png)
+2. std::thread - error C2893: Failed to specialize function template 'unknown-type std::invoke(_Callable &&,_Ty1 &&,_Types2 &&...) noexcept(<expr>)'
+error C2780: 'unknown-type std::invoke(_Callable &&) noexcept(<expr>)': expects 1 arguments - 2 provided
 
 if you know how to do something from the above let me know on issues with the "solution" label!  
+
+the plan is to go by this:
+![alt text](https://github.com/OfekShochat/0xA2_chessengine/blob/master/threaded_chessengine.png)
 
 ### is this like allie chess? ###
 I dont know. they say its a hybrid search that uses alpha beta search and monte carlo and it uses the lc0 backend. so I make my own backend (for now only with tensorflow and the  cppflow project but it is slow so maybe Ill use it too); and it doesnt specify if its the mcαβ.
