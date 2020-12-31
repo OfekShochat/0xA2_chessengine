@@ -45,6 +45,7 @@ public:
     float q = 0;
     float w = 0;
     bool turn;
+    bool ThreadMaster = false;
     // default values for first seen search
     bool is_expanded = false;
     list<Node*> children = {};
@@ -58,10 +59,10 @@ public:
     int depth();
     int root_depth();
     int ABn = 0;
-
+    Node* select();
 private:
     evaluator* eval = new evaluator();
     double ucb1();
-    Node* select();
+    
     float AB(string fen, float alpha, float beta, int depth, int turn);
 };

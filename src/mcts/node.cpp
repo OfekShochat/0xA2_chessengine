@@ -57,7 +57,7 @@ void Node::update(float result) {
     int turn_factor = 1;
     if (!turn)
         int turn_factor = -1;
-    while (current->mParent != NULL) {
+    while (current->mParent != NULL || !current->ThreadMaster != true) {
         current->n += 1;
         current->w += result;
         current->q = w / n;
@@ -65,7 +65,8 @@ void Node::update(float result) {
         turn_factor *= -1;
         result = result*turn_factor;
     }
-    current->n += ABn;
+    current->w += result;
+    current->q = w / n;
 }
 
 Node* Node::select() {

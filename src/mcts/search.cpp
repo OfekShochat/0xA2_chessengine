@@ -24,6 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#include "../neural/tensorflow/use.h"
 #include <chrono>
 #include "evaluate.h"
+#include "Thread.h"
+#include <thread>
 
 using namespace std;
 using namespace chrono;
@@ -37,7 +39,7 @@ Search::Search(string b, int d, int n, int tt) {
 
 Node* Search::go() {
     auto st = high_resolution_clock::now();
-
+    list<SearchThread*> threads = {};
     evaluator* eval = new evaluator();
 
     int t_depth;
@@ -47,17 +49,20 @@ Node* Search::go() {
         root->n += 1;
         n += 1;
 
-        Node* AB = root->select_AB();
-        float score = AB->AB_evaluate();
-
-        AB->expand();
-
+        if (4) { // activeThreads constant 4
+            Node* selected = root->select();
+            selected->n += 1;
+            SearchThread* t = new SearchThread(selected);
+            thread* t1 = new thread(&t->Start);
+            threads.push_back(t);
+        }
+        /*
         t_depth = root->root_depth();
         if (t_depth > p_depth) {
             p_depth = t_depth;
             cout << "info depth " << t_depth << " score " << score << endl;
         }
-
+        */
         /*while (true) {
             auto current = high_resolution_clock::now();
             auto duration = duration_cast<seconds>(current - st);
@@ -65,7 +70,6 @@ Node* Search::go() {
                 break;
             }
         }*/
-        AB->update(score);
         DBG_ALWAYS(cout << "done, starting over\n");
 
         DBG_ALWAYS(cout << "best: " << root->getbest()->mMove << " q: " << root->getbest()->q << endl);
