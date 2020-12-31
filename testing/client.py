@@ -65,8 +65,8 @@ for i in range(10000):
     engines_sort = sorted(engines, key=lambda x: x.games + random.random()*i/10)
     engine1 = engines_sort[0]
     engine2 = engines_sort[1]
-    wc = 1.5 * 60
-    bc = 1.5 * 60
+    wc = 3 * 60
+    bc = 3 * 60
     dd = False
     d = False
     print("\n\nstarting a match (gameno {}): {} {} vs. {} {}".format(i, str(engine1.name), engine1.rating, str(engine2.name), engine2.rating))
@@ -85,7 +85,7 @@ for i in range(10000):
             d = True"""
             
         wc -= (time() - e1s)
-        wc += 1 
+        #wc += 1 
         if board.is_game_over(): break
         e2s = time()
         m = engine1.en.play(board, ce.Limit(white_clock=wc, black_clock=bc))
@@ -97,7 +97,7 @@ for i in range(10000):
         board.push(m.move)
         moves.append(str(m.move))
         bc -= (time() - e2s)
-        bc += 1
+        #bc += 1
         ##print(board)
         print("{} {} | {} {}                              ".format(engine1.name, wc, engine2.name, bc), end="\r")
         if wc < 0 or bc < 0:
