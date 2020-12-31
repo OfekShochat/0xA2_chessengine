@@ -5,6 +5,6 @@
 
 void SearchThread::Start(Node* selected) {
     Node* AB = selected->select_AB();
-    selected->update(selected->AB_evaluate());
     selected->expand();
+    selected->update(selected->AB_evaluate());
 }

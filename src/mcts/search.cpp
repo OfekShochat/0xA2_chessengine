@@ -44,7 +44,7 @@ Node* Search::go() {
 
     int t_depth;
     int p_depth = 0; 
-
+    root->expand();
     while (true) {
         root->n += 1;
         n += 1;
@@ -56,13 +56,13 @@ Node* Search::go() {
             thread* t1 = new thread(&SearchThread::Start, selected);
             threads.push_back(t1);
         }
-        /*
+        
         t_depth = root->root_depth();
         if (t_depth > p_depth) {
             p_depth = t_depth;
-            cout << "info depth " << t_depth << " score " << score << endl;
+            cout << "info depth " << t_depth << " score " << root->getbest()->q << endl;
         }
-        */
+        
         /*while (true) {
             auto current = high_resolution_clock::now();
             auto duration = duration_cast<seconds>(current - st);

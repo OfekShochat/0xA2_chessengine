@@ -113,6 +113,8 @@ Node* Node::select_AB() {
         }
         //cout << "selecting\n";
         current = current->select();
+        if (!current)
+            cout << "none oof" << endl;
     }
     return current;
 }

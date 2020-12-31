@@ -6,5 +6,5 @@
 
 class SearchThread {
 public:
-    void Start(Node* selected);
+    static void Start(Node* selected);
 };
