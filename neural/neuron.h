@@ -8,7 +8,7 @@ using namespace std;
 class Neuron {
 public:
     float liniar(vector<float> inputs);
-    void init(int nextLayer_NeuronNum);
+    void init(int previousLayerNeuronNum);
     std::vector<double> weights;
     float bias;
 };

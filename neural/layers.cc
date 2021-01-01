@@ -32,7 +32,7 @@ layers::hidden::hidden(int numNeurons) {
 }
 
 void layers::hidden::init(int NextLayerNeuronNum) {
-    for (int i = 0; i == neurons_n; i++) {
+    for (int i = 0; i < neurons_n; i++) {
         Neuron* n = new Neuron();
         n->init(NextLayerNeuronNum);
         neurons.push_back(n);
@@ -41,7 +41,9 @@ void layers::hidden::init(int NextLayerNeuronNum) {
 
 vector<float> layers::hidden::activate(vector<float> in) {
     vector<float> out;
-    for (int i = 0; i == neurons_n; i++) {
+    cout << neurons_n << endl;
+    cout << neurons.size() << endl;
+    for (int i = 0; i < neurons_n; i++) {
         Neuron* n = neurons[i];
         out.push_back(n->liniar(in));
     }
@@ -50,7 +52,7 @@ vector<float> layers::hidden::activate(vector<float> in) {
 
 vector<float> layers::relu::activate(vector<float> in) {
     vector<float> out;
-    for (int i = 0; i == in.size(); i++) {
+    for (int i = 0; i < in.size(); i++) {
         out.push_back(max(0, i));
     }
     return out;

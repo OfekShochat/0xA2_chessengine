@@ -3,13 +3,12 @@
 #include <vector>
 
 Net1::Net1() {
-    in->init(1);
+    hid1->init(1);
 }
 
 float Net1::forward(vector<float> data) {
     vector<float> out;
-    
-    out = in->activate(data);
-
+    out = hid1->activate(data);
+    out = rel->activate(out);
     return tanhf(out[0]);
 }
