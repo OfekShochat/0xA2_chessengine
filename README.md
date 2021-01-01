@@ -21,7 +21,7 @@ you can train tensorflow models (value networks only for now)(you can make keras
 
 ### special thanks ###
 thc chess library (I use the retro-sargon one https://github.com/billforsternz/retro-sargon) from Bill Forster.              
-cppflow for the tensorflow backend (https://github.com/serizba/cppflow) from serizba             
+cppflow for the tensorflow backend (https://github.com/serizba/cppflow) from serizba  (unsused but oh well)           
 and the discord of engine-programming and leela chess zero
 
 ### why the code is messy? ###
