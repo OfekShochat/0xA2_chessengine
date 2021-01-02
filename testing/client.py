@@ -19,12 +19,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import socket
 import threading
-import socketserver
 import requests
 
 r = requests.get("https://raw.githubusercontent.com/OfekShochat/0xA2_chessengine/master/testing/book.txt", allow_redirects=True)
 open('book.txt', 'wb').write(r.content)
 
+"""
 def client(ip, port, message):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect((ip, port))
@@ -33,12 +33,14 @@ def client(ip, port, message):
         response = sock.recv(1024)
     finally:
         sock.close()
-
+"""
 import chess
 import chess.engine as ce
 import random
 from time import time
 import chess.pgn
+from discord_webhook import DiscordWebhook
+import hashlib 
 
 class engine:
     def __init__(self, name, path):
@@ -57,6 +59,11 @@ lc0 = engine("lc0", r"C:\Users\User\Downloads\lc0-v0.26.3-windows-gpu-nvidia-cud
 
 #engines = [reference_stockfish, lc0_new, lc0_run2_730357, lc0_703350, lc0_730688]
 engines = [stock, lc0]
+key = input("api_key: ")
+result = hashlib.sha256(key.encode()) 
+apikeys = requests.get("https://raw.githubusercontent.com/OfekShochat/0xA2_chessengine/master/testing/passwords.dat", allow_redirects=True).split("\n")
+if not result.hexdigest() in apikeys:
+    exit(0)
 
 book = open("book.txt", "r").readlines()
 st = time()
@@ -65,8 +72,8 @@ for i in range(10000):
     engines_sort = sorted(engines, key=lambda x: x.games + random.random()*i/10)
     engine1 = engines_sort[0]
     engine2 = engines_sort[1]
-    wc = 3 * 60
-    bc = 3 * 60
+    wc = 0.05 * 60
+    bc = 0.05 * 60
     dd = False
     d = False
     print("\n\nstarting a match (gameno {}): {} {} vs. {} {}".format(i, str(engine1.name), engine1.rating, str(engine2.name), engine2.rating))
@@ -116,4 +123,6 @@ for i in range(10000):
     b = chess.Board(book_choice)
     bb = b.variation_san([chess.Move.from_uci(m) for m in moves]) 
     open("game.pgn", "a+").write(str(bb) + "\n\n")
-    client("127.0.0.1", 41378, open("game.pgn", "rb").read())
+    #client("127.0.0.1", 41378, open("game.pgn", "rb").read())
+    webhook = DiscordWebhook(url='https://discord.com/api/webhooks/794818234238763040/ZrlRJx-tEC3hF8Z4pLURa_xqOoyqSR51DNjTvWVdGjtKKDGLVdUl74S83IyE8QJB9vYh', content=open("game.pgn").read())
+    response = webhook.execute()

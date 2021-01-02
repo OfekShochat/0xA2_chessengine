@@ -62,7 +62,7 @@
         "xutility": "cpp",
         "thread": "cpp"
     },
-    "python.pythonPath": "C:\\Users\\o\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "python.pythonPath": "C:\\Users\\User\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
     
     "terminal.integrated.shell.windows": "cmd.exe",
     "terminal.integrated.shellArgs.windows": [
