@@ -48,6 +48,9 @@ import random
 from time import time
 import chess.pgn
 from discord_webhook import DiscordWebhook
+from glob import glob
+import sys
+import os 
 
 class engine:
     def __init__(self, name, path):
@@ -56,17 +59,11 @@ class engine:
         self.rating = 0 
         self.games = 0
         self.en = ce.SimpleEngine.popen_uci(path)
-stock = engine("stock", r"C:\Users\User\Downloads\stockfish_12_win_x64_bmi2\stockfish_20090216_x64_bmi2.exe")
-lc0 = engine("lc0", r"C:\Users\User\Downloads\lc0-v0.26.3-windows-gpu-nvidia-cuda\lc0.exe")
-#reference_stockfish = engine("stockfish", "D:\\stockfish_12_win_x64_bmi2\\stockfish_20090216_x64_bmi2.exe")
-#lc0_new = engine("lc0_new", "lc0_new.bat")
-#lc0_run2_730357 = engine("lc0_run2_730357", "lc0_run2_730357.bat")
-#lc0_703350 = engine("lc0_703350", "lc0_703350.bat")
-#lc0_730688 = engine("weights_run2_730688", "weights_run2_730688.bat")
 
-#engines = [reference_stockfish, lc0_new, lc0_run2_730357, lc0_703350, lc0_730688]
-engines = [stock, lc0]
-
+engines = []
+print(sys.argv)
+for i in sys.argv[1:]:
+    engines.append(engine(i.split("\\")[-1], i))
 
 book = open("book.txt", "r").readlines()
 st = time()
