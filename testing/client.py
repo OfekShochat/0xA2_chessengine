@@ -20,6 +20,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import socket
 import threading
 import requests
+import hashlib 
+
+key = input("api_key: ")
+result = hashlib.sha256(key.encode()) 
+print(result.hexdigest())
+apikeys = requests.get("https://raw.githubusercontent.com/OfekShochat/0xA2_chessengine/master/testing/passwords.dat", allow_redirects=True).content.decode("utf-8").split("\n")
+if not result.hexdigest() in apikeys:
+    exit(0)
 
 r = requests.get("https://raw.githubusercontent.com/OfekShochat/0xA2_chessengine/master/testing/book.txt", allow_redirects=True)
 open('book.txt', 'wb').write(r.content)
@@ -40,7 +48,6 @@ import random
 from time import time
 import chess.pgn
 from discord_webhook import DiscordWebhook
-import hashlib 
 
 class engine:
     def __init__(self, name, path):
@@ -59,11 +66,7 @@ lc0 = engine("lc0", r"C:\Users\User\Downloads\lc0-v0.26.3-windows-gpu-nvidia-cud
 
 #engines = [reference_stockfish, lc0_new, lc0_run2_730357, lc0_703350, lc0_730688]
 engines = [stock, lc0]
-key = input("api_key: ")
-result = hashlib.sha256(key.encode()) 
-apikeys = requests.get("https://raw.githubusercontent.com/OfekShochat/0xA2_chessengine/master/testing/passwords.dat", allow_redirects=True).split("\n")
-if not result.hexdigest() in apikeys:
-    exit(0)
+
 
 book = open("book.txt", "r").readlines()
 st = time()
