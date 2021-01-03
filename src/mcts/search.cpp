@@ -26,6 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "evaluate.h"
 #include "Thread.h"
 #include <thread>
+#include "chess/thc.h"
 
 using namespace std;
 using namespace chrono;
@@ -100,4 +101,58 @@ Node* Search::go() {
         }
     }
     return root;
+}
+
+int Search::timem() {
+    thc::ChessRules cr;
+    const char* c = mBoard.c_str();
+    cr.Forsyth(c);
+
+    int nMoves;
+    int material = 0;
+
+    string b = cr.ToDebugStr();
+    for (auto piece = b.cbegin(); piece != b.cend(); ++piece) {
+		switch (*piece) {
+		case 'P': 
+			material += 1;
+			break;
+		case 'R':
+            material += 5;
+			break;
+		case 'N':
+			material += 3;
+			break;
+		case 'B':
+			material += 3;
+			break;
+		case 'Q':
+			material += 9;
+			break;
+
+		case 'p': 
+			material += 1;
+			break;
+		case 'r':
+			material += 5;
+			break;
+		case 'n':
+			material += 3;
+			break;
+		case 'b':
+			material += 3;
+			break;
+		case 'q':
+			material += 9;
+			break;
+		}
+	}
+    if (material < 20)
+        nMoves = material + 10;
+    else if (20 <= material <= 60)
+        nMoves = 0.375*material + 22;
+    else if (material > 60)
+        nMoves = 1.25*material - 30;
+    
+    return (int)t/nMoves;
 }

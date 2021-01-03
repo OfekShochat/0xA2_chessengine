@@ -40,4 +40,6 @@ public:
 
 	// functions/methods
 	Node* go();
+private:
+	int timem();
 };
