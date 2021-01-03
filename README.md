@@ -7,7 +7,7 @@ if you want to talk with me, you can join here! https://discord.gg/cTeagCWtMA
 
 ## current workings ##
 Nothing for now!! But you can suggest ways to make the time management better!  
-
+On discord, if you want to train a neural net for this engine, mention me!    
 if you know how to do something from the above let me know on issues with the "solution" label!  
 
 the plan is to go by this:
