@@ -85,22 +85,26 @@ for i in range(10000):
         m = engine1.en.play(board, ce.Limit(white_clock=wc, black_clock=bc))
         board.push(m.move)
         moves.append(str(m.move))
-        """if m.draw_offered:
+        if m.draw_offered:
             if d:
                 dd = True
                 break
-            d = True"""
+            d = True
+        else:
+            d = False
             
         wc -= (time() - e1s)
         #wc += 1 
         if board.is_game_over(): break
         e2s = time()
         m = engine1.en.play(board, ce.Limit(white_clock=wc, black_clock=bc))
-        """if m.draw_offered:
+        if m.draw_offered:
             if d:
                 dd = True
                 break
-            d = True"""
+            d = True
+        else:
+            d = False
         board.push(m.move)
         moves.append(str(m.move))
         bc -= (time() - e2s)
