@@ -31,17 +31,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using namespace std;
 using namespace chrono;
 
-Search::Search(string b, int d, int n, int tt) {
+Search::Search(string b, int d, int n, int tt, bool timemm) {
     mBoard = b;
     depth = d;
     nodes = n;
     t = tt;
+    timemanage = timemm;
 }
 
 Node* Search::go() {
     auto st = high_resolution_clock::now();
     list<std::thread*> threads = {};
     evaluator* eval = new evaluator();
+
+    int managedtime = timem();        
 
     int t_depth;
     int p_depth = 0; 
@@ -89,15 +92,25 @@ Node* Search::go() {
                 break;
         }
         */
-        if (n > nodes) {
-            auto current = high_resolution_clock::now();
-            auto duration = duration_cast<milliseconds>(current - st);
-            cout << duration.count() << " " << n << endl;
-            if (duration.count() == 0)
-                cout << "0" << endl;
-            else 
-                cout << n/(duration.count())*1000 << endl;
-            break;
+        if (t != 0) {
+            if (timemanage) {
+                auto current = high_resolution_clock::now();
+                auto duration = duration_cast<milliseconds>(current - st);
+                if (duration.count() > managedtime)
+                    break;
+            }
+        }
+        if (nodes != 0) {
+            if (n >= nodes) {
+                auto current = high_resolution_clock::now();
+                auto duration = duration_cast<milliseconds>(current - st);
+                cout << duration.count() << " " << n << endl;
+                if (duration.count() == 0)
+                    cout << "0" << endl;
+                else 
+                    cout << n/(duration.count())*1000 << endl;
+                break;
+            }
         }
     }
     return root;
