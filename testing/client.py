@@ -61,7 +61,6 @@ class engine:
         self.en = ce.SimpleEngine.popen_uci(path)
 
 engines = []
-print(sys.argv)
 for i in sys.argv[1:]:
     engines.append(engine(i.split("\\")[-1], i))
 
@@ -69,11 +68,11 @@ book = open("book.txt", "r").readlines()
 st = time()
 for i in range(10000):
     moves = []
-    engines_sort = sorted(engines, key=lambda x: x.games + random.random()*i/10)
+    engines_sort = sorted(engines, key=lambda x: x.games + random.random()*100)
     engine1 = engines_sort[0]
     engine2 = engines_sort[1]
-    wc = 0.05 * 60
-    bc = 0.05 * 60
+    wc = 3 * 60
+    bc = 3 * 60
     dd = False
     d = False
     print("\n\nstarting a match (gameno {}): {} {} vs. {} {}".format(i, str(engine1.name), engine1.rating, str(engine2.name), engine2.rating))
