@@ -6,7 +6,7 @@ also known by MCαβ (monte carlo alpha beta, see https://www.chessprogramming.o
 if you want to talk with me, you can join here! https://discord.gg/cTeagCWtMA
 
 ## current workings ##
-1. making the neural network lib for the engine. I know something with the neuron code is wrong, do you know? something with the weights
+Nothing for now!! But you can suggest ways to make the time management better!  
 
 if you know how to do something from the above let me know on issues with the "solution" label!  
 
