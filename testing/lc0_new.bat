@@ -1,1 +1,0 @@
-D:\lc0-v0.26.1-windows-gpu-nvidia-cuda\lc0.exe -w D:\lc0-v0.26.1-windows-gpu-nvidia-cuda\128x10-PB02-cleanrun-swa-185000.pb.gz
