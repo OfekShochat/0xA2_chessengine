@@ -13,8 +13,8 @@ def random_fen(nnue=False):
     if nnue:
         return b.fen(), previous
     return b
+engine = chess.engine.SimpleEngine.popen_uci(r"C:\Users\User\Downloads\stockfish_12_win_x64_bmi2\stockfish_20090216_x64_bmi2.exe")
 def ev(n):
-    engine = chess.engine.SimpleEngine.popen_uci(r"C:\Users\User\Downloads\stockfish_12_win_x64_bmi2\stockfish_20090216_x64_bmi2.exe")
     dat = open("data.dat", "a+")
     tar = open("targets.dat", "a+")
     st = time()
@@ -34,6 +34,10 @@ def ev(n):
         else:
             tar.write(str(tanh(int(str(e["score"].white()))/500)) + "\n")
             dat.write(r.fen() + "\n")
+        del r
+        del e
+    del tar
+    del dat
         
 m = False
 for i in range(200):
