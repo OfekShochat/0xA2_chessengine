@@ -32,12 +32,16 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     
         if d["type"] == "register":
             key = hashlib.md5(bytes(str(time()), "utf-8")).hexdigest()
-            self.request.sendall(b"""{"type":"registerResponse", "key":%s}""" % bytes(key, "utf-8"))
+            self.request.sendall(b"""{"type":"registerResponse", "key":"%s"}""" % bytes(key, "utf-8"))
+            open("keys.txt", "a+").write(key + "\n")
 
         if d["type"] == "jobGet":
-            self.request.sendall(b"""{"type:"GetResponse", "job":%s}""" % jobs[0])
-            inprogress.append({"job":job[0], "time":time()})
-            jobs.pop(0)
+            if len(jobs) < 1:
+                self.request.sendall(b"""{"type":"GetResponse", "code":"3"}""")
+            else:
+                self.request.sendall(b"""{"type":"GetResponse", "job":%s, "code":"0"}""" % bytes(json.dumps(jobs[0]), "utf-8"))
+                inprogress.append({"job":jobs[0], "time":time()})
+                jobs.pop(0)
             
         if d["type"] == "finishJob":
             self.request.sendall(b"""{"type":"finishResponse"}""")
@@ -85,6 +89,10 @@ if __name__ == "__main__":
             jobs.append(json.loads(input("addJob: ")))
         if i.lower() == "peek":
             t = [["job", "status"]]
+            for i in jobs:
+                t.append([i, "TOGET"])
+            for i in inprogress:
+                t.append([i, "INPROGRESS"])
             print(t)
             table = AsciiTable(t)
             print(table.table)

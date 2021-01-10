@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import socket
 import threading
 import socketserver
@@ -24,7 +23,7 @@ from glob import glob
 import os
 import json
 import requests
-
+import uuid
 VERSION = 0.1
 
 def client(ip, port, mtype):
@@ -33,21 +32,24 @@ def client(ip, port, mtype):
     try:
         if mtype == "register":
             message = b"""{"type":"register"}"""
-
-        sock.sendall(message)
+            sock.sendall(message)
+        if mtype == "GetJob":
+            message = b"""{"type":"jobGet"}"""
+            sock.sendall(message)
         response = sock.recv(4096)
     finally:
         sock.close()
-    return response
+    return json.loads(response.decode("utf-8"))
 
 if __name__=="__main__":
     try:
-        if not open("login.txt").read() == "":
-            apikey = json.loads(open("login.txt"))["key"]
-        raise FileNotFoundError
+        if open("login.txt").read() != "":
+            apikey = json.loads(open("login.txt").read())["key"]
+        else:
+            raise FileNotFoundError
     except FileNotFoundError:
         print("no login information. getting api key")
-        open("login.txt", "w+").write(client("127.0.0.1", 41378, "register").decode("utf-8"))
+        open("login.txt", "w+").write(json.dumps(client("127.0.0.1", 41378, "register")))
 
     if not ".\\cutechess" in glob(".\\**"):
         import zipfile
@@ -55,8 +57,16 @@ if __name__=="__main__":
             os.mkdir(".\\cutechess")
             zip_ref.extractall(".\\cutechess")
     
-    r = requests.get("https://raw.githubusercontent.com/OfekShochat/0xA2_chessengine/master/testing/book.txt", allow_redirects=True)
+    r = requests.get("https://raw.githubusercontent.com/OfekShochat/0xA2_chessengine/master/pythonScripts/testing/book.txt", allow_redirects=True)
     open('book.txt', 'wb').write(r.content)
+
+    print("getting job")
+    res = client("127.0.0.1", 41378, "GetJob")
+    if res["code"] == "0":
+        job = res["job"]
+        print(job)
+    else:
+        print("job getter exited with codeno: {}".format(res["code"]))
 
     os.system(r""".\cutechess\cutechess-cli.exe -engine name=lc0 cmd=D:\lc0-v0.26.1-windows-gpu-nvidia-cuda\lc0.exe"""
     + r""" -engine name=stockfish cmd=D:\stockfish_12_win_x64_bmi2\stockfish_20090216_x64_bmi2.exe -each proto=uci tc=100/90+1 """
