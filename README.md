@@ -6,7 +6,8 @@ also known by MCαβ (monte carlo alpha beta, see https://www.chessprogramming.o
 if you want to talk with me, you can join here! https://discord.gg/cTeagCWtMA
 
 ## current workings ##
-Nothing for now!! But you can suggest ways to make the time management better!  
+import caffe or caffe2 into the project. if someone has caffe as a lib or a lib structure (without /include /src) and with the protobuf file unzipped it would be great.       
+but if you know how to use libtorch, or you think I should use the python bindings, ping me!   
 On discord, if you want to train a neural net for this engine, mention me!    
 if you know how to do something from the above let me know on issues with the "solution" label!  
 

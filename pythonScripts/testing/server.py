@@ -24,6 +24,13 @@ from time import time
 import json 
 import hashlib
 from terminaltables import AsciiTable
+import at_exit
+
+def atexit():
+    print("poop")
+    server.shutdown()
+    server.server_close()
+at_exit.register(atexit)
 
 class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
@@ -85,6 +92,29 @@ if __name__ == "__main__":
     
     while True:
         i = input("% ")
+        
+
+        if i.lower() == "templates":
+            print("poop")
+            print("1. games template")
+            choice = input(" - ")
+            if choice == "1":
+                n = int(input("number of games: "))
+                tc = input("tc: ")
+                engines = input("engines: ").split("-")
+            es = []
+            for engine in engines:
+                e = {}
+                this = json.loads(open(engine).read())
+                es.append(this)
+                
+            for _ in range(n):
+                
+                jobs.append({"tc":tc, "engines":es}) 
+                # here we need to loop on the engines and with priority (or without it) assign games that we want to, with priority, 
+                # make the priority engines play all low priority engines. without priority, try to make it that every engine plays the same amount of games. 
+                # a way to do that, can be like we did in the games.py, so adding game to an engine that is the least tested. but that would be highly inefficient.
+
         if i.lower() == "addjob":
             jobs.append(json.loads(input("addJob: ")))
         if i.lower() == "peek":
@@ -93,7 +123,6 @@ if __name__ == "__main__":
                 t.append([i, "TOGET"])
             for i in inprogress:
                 t.append([i, "INPROGRESS"])
-            print(t)
             table = AsciiTable(t)
             print(table.table)
     server.shutdown()
