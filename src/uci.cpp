@@ -135,7 +135,8 @@ void uci::processgo(string cmd, string fen) {
 		cout << "d: " << d << " n: " << n << " tt: " << tt << endl;
 	}
 	s->go();
-	cout << s->root->getbest()->mMove << " " << s->root->AB_evaluate() << endl;
+	Node* best = s->root->getbest();
+	cout << best->mMove << " " << best->n << endl;
 }
 
 string uci::processpos(string cmd) {

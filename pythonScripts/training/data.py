@@ -8,7 +8,7 @@ import chess.pgn
 
 def random_fen(nnue=False):
     b = chess.Board()
-    for i in range(random.randint(1, 100)):
+    for i in range(random.randint(1, random.randint(2,100))):
         if b.is_game_over(): break  
         previous = b.fen()
         b.push(random.choice(list(b.legal_moves)))
@@ -24,7 +24,7 @@ def ev(n):
     for i in range(n):
         print(i, end="\r")
         r = random_fen()
-        e = engine.analyse(r, chess.engine.Limit(depth=1))
+        e = engine.analyse(r, chess.engine.Limit(depth=3))
         if str(e["score"].white()).__contains__("#"):
             dat.write(r.fen() + "\n")
             if str(e["score"]).__contains__("+"):
@@ -87,4 +87,4 @@ for i in range(200):
     else:
         sleep(2)"""
 
-ev_from()
+ev(100_000_000)

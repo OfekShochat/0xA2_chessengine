@@ -75,17 +75,16 @@ Node* Node::select() {
     Node* selected{};
     for (auto& child : children) {
         double ucbv = child->ucb1();
-        //cout << ucbv << "\n";
         if (ucbv == 100000.00) {
             selected = child;
             break;
         }
         if (ucbv > max) {
             selected = child;
-            double max = ucbv;
+            max = ucbv;
+            //cout << selected->mMove << " " << max << endl;
         }
     }
-    //cout << selected << "\n";
     return selected;
 }
 
@@ -98,9 +97,7 @@ double Node::ucb1() {
     //cout << "log parent: " << log(mParent->n) << " sqrt log parent: " << sqrt(log(mParent->n)) << " parent: " << mParent->n << endl;
     // with policy (unmodified) : Q + policy + factor * sqrt(log(parent.n) / n)
     // with policy (modified) : Q + factor * sqrt(policy / (n + 1));
-    return q + sqrt(log(mParent->n) / (double(n) + 1.00));
-
-
+    return q + 2 * sqrt(log(mParent->n) / (double(n) + 1.00));
 }
 
 Node* Node::select_AB() {
@@ -154,7 +151,7 @@ Node* Node::getbest() {
         //cout << ucbv << "\n";
         if (child->n > max) {
             selected = child;
-            double max = child->n;
+            max = child->n;
         }
     }
     //cout << selected << "\n";
@@ -181,7 +178,7 @@ float Node::AB_evaluate() {
     for (auto& move : moves) {
         ABn++;
         cr.PlayMove(move);
-        float score = AB(cr.ForsythPublish(), alpha * color, beta * color, 3, color) * color;
+        float score = AB(cr.ForsythPublish(), alpha * color, beta * color, 15, color) * color;
         //cout << score << endl;
         cr.PopMove(move);
         if (score >= beta)

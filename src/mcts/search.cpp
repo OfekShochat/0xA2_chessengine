@@ -27,6 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "Thread.h"
 #include <thread>
 #include "chess/thc.h"
+#include <future>
 
 using namespace std;
 using namespace chrono;
@@ -44,7 +45,7 @@ Node* Search::go() {
     list<std::thread*> threads = {};
     evaluator* eval = new evaluator();
 
-    int managedtime = timem();        
+    //int managedtime = timem();        
 
     int t_depth;
     int p_depth = 0; 
@@ -52,8 +53,8 @@ Node* Search::go() {
     while (true) {
         root->n += 1;
         n += 1;
-
-        if (4) { // activeThreads constant 4
+        this_thread::sleep_for(std::chrono::milliseconds(100));
+        if (4) { // activeThreads constant 4 < thread::hardware_concurrency()
             Node* selected = root->select();
             selected->ThreadMaster = true;
             selected->n += 1;
@@ -76,7 +77,7 @@ Node* Search::go() {
         }*/
         DBG_ALWAYS(cout << "done, starting over\n");
 
-        DBG_ALWAYS(cout << "best: " << root->getbest()->mMove << " q: " << root->getbest()->q << endl);
+        //cout << "best: " << root->getbest()->mMove << " q: " << root->getbest()->q << endl;
 
         /*if (!t == 0) {
             auto current = high_resolution_clock::now();
@@ -92,7 +93,7 @@ Node* Search::go() {
                 break;
         }
         */
-        if (t != 0) {
+        /*if (t != 0) {
             if (timemanage) {
                 auto current = high_resolution_clock::now();
                 auto duration = duration_cast<milliseconds>(current - st);
@@ -100,22 +101,22 @@ Node* Search::go() {
                     break;
             }
         }
+        */
         if (nodes != 0) {
             if (n >= nodes) {
                 auto current = high_resolution_clock::now();
                 auto duration = duration_cast<milliseconds>(current - st);
-                cout << duration.count() << " " << n << endl;
-                if (duration.count() == 0)
-                    cout << "0" << endl;
-                else 
-                    cout << n/(duration.count())*1000 << endl;
+            
                 break;
             }
         }
     }
+    for (auto const& i : root->children) {
+        cout << i->mMove << " " << i->n << endl;
+    }
     return root;
 }
-
+/*
 int Search::timem() {
     thc::ChessRules cr;
     const char* c = mBoard.c_str();
@@ -169,3 +170,4 @@ int Search::timem() {
     
     return (int)t/nMoves;
 }
+*/
