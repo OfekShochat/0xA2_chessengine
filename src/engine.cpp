@@ -45,7 +45,7 @@ int main(int argc, const char* argv[]) {
 	size_t hash1 = hasher(sService); // hashing again for more diversity in hashing (more difference in hashes)
 
 	// arguments
-	int rply = 4;
+	int rply = 20;
 
 	cout << " _         __\n";
 	cout << "| | \\/ _   __|\n";

@@ -1,30 +1,62 @@
-Build started at 2021-01-18T20:33:53.517269
-Main binary: c:\users\user\appdata\local\programs\python\python38\python.exe
+Build started at 2021-01-19T10:20:24.535746
+Main binary: c:\users\o\appdata\local\programs\python\python38\python.exe
 Build Options: -Dbackend=ninja
 Python system: Windows
 The Meson build system
-Version: 0.56.0
-Source dir: C:\Users\User\Documents\GitHub\0xA2_chessengine
-Build dir: C:\Users\User\Documents\GitHub\0xA2_chessengine\build
+Version: 0.56.2
+Source dir: D:\GitHub\0xA2_chessengine
+Build dir: D:\GitHub\0xA2_chessengine\build
 Build type: native build
 Project name: 0xA2_chessengine
 Project version: 0.0.6
-C++ compiler for the host machine: cl (msvc 19.28.29334 "Microsoft (R) C/C++ Optimizing Compiler Version 19.28.29334 for x64")
-C++ linker for the host machine: link link 14.28.29334.0
+None of 'CXX' are defined in the environment, not changing global flags.
+None of 'CXXFLAGS' are defined in the environment, not changing global flags.
+None of 'LDFLAGS' are defined in the environment, not changing global flags.
+None of 'CPPFLAGS' are defined in the environment, not changing global flags.
+None of 'CXX_LD' are defined in the environment, not changing global flags.
+Sanity testing C++ compiler: cl
+Is cross compiler: False.
+None of 'CXX_LD' are defined in the environment, not changing global flags.
+Sanity check compiler command line: cl D:\GitHub\0xA2_chessengine\build\meson-private\sanitycheckcpp.cc /FeD:\GitHub\0xA2_chessengine\build\meson-private\sanitycheckcpp.exe /MD /nologo /showIncludes /link
+Sanity check compile stdout:
+sanitycheckcpp.cc
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: D:\GitHub\0xA2_chessengine\build\meson-private\sanitycheckcpp.exe
+C++ compiler for the host machine: cl (msvc 19.27.29111 "Microsoft (R) C/C++ Optimizing Compiler Version 19.27.29111 for x86")
+C++ linker for the host machine: link link 14.27.29111.0
 None of 'AR' are defined in the environment, not changing global flags.
-C++ compiler for the build machine: cl (msvc 19.28.29334 "Microsoft (R) C/C++ Optimizing Compiler Version 19.28.29334 for x64")
-C++ linker for the build machine: link link 14.28.29334.0
+None of 'CXX' are defined in the environment, not changing global flags.
+None of 'CXXFLAGS' are defined in the environment, not changing global flags.
+None of 'LDFLAGS' are defined in the environment, not changing global flags.
+None of 'CPPFLAGS' are defined in the environment, not changing global flags.
+None of 'CXX_LD' are defined in the environment, not changing global flags.
+Sanity testing C++ compiler: cl
+Is cross compiler: False.
+None of 'CXX_LD' are defined in the environment, not changing global flags.
+Sanity check compiler command line: cl D:\GitHub\0xA2_chessengine\build\meson-private\sanitycheckcpp.cc /FeD:\GitHub\0xA2_chessengine\build\meson-private\sanitycheckcpp.exe /MD /nologo /showIncludes /link
+Sanity check compile stdout:
+sanitycheckcpp.cc
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: D:\GitHub\0xA2_chessengine\build\meson-private\sanitycheckcpp.exe
+C++ compiler for the build machine: cl (msvc 19.27.29111 "Microsoft (R) C/C++ Optimizing Compiler Version 19.27.29111 for x86")
+C++ linker for the build machine: link link 14.27.29111.0
 None of 'AR' are defined in the environment, not changing global flags.
-Build machine cpu family: x86_64
-Build machine cpu: x86_64
-Host machine cpu family: x86_64
-Host machine cpu: x86_64
-Target machine cpu family: x86_64
-Target machine cpu: x86_64
+Build machine cpu family: x86
+Build machine cpu: x86
+Host machine cpu family: x86
+Host machine cpu: x86
+Target machine cpu family: x86
+Target machine cpu: x86
 Build targets in project: 1
 
-Option cpp_std is: none [default: c++17]
-Option buildtype is: debug [default: release]
-Found ninja-1.10.0.git.kitware.jobserver-1 at C:\Users\User\AppData\Local\Programs\Python\Python38\Scripts\ninja.EXE
+Found ninja-1.10.0.git.kitware.jobserver-1 at C:\Users\o\AppData\Local\Programs\Python\Python38\Scripts\ninja.EXE
 None of 'STRIP' are defined in the environment, not changing global flags.
 None of 'STRIP' are defined in the environment, not changing global flags.

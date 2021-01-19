@@ -7,8 +7,8 @@ project('0xA2_chessengine', 'cpp',
         'buildtype=release',
     ]
 )
-#if get_option('')
-#endif
+
+#subproject()
 
 files = []
 includes = []

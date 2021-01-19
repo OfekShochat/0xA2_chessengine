@@ -1,4 +1,3 @@
 @echo off
-
-meson build
+meson build --buildtype=%1
 ninja -C build

@@ -1,4 +1,0 @@
-option('',
-    type : 'boolean',
-    value : ''
-)

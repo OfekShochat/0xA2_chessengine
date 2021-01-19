@@ -21,13 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 #include "mcts/search.h"
 #include "utils/preprocess_utils.h"
-//#include "../neural/tensorflow/use.h"
 #include <chrono>
 #include "evaluate.h"
 #include "Thread.h"
 #include <thread>
 #include "chess/thc.h"
-#include <future>
+#include "utils/ThreadPool.h"
 
 using namespace std;
 using namespace chrono;
@@ -49,17 +48,18 @@ Node* Search::go() {
 
     int t_depth;
     int p_depth = 0; 
+
+    ThreadPool pool(thread::hardware_concurrency()/2);
+
     root->expand();
     while (true) {
         root->n += 1;
         n += 1;
-        this_thread::sleep_for(std::chrono::milliseconds(100));
         if (4) { // activeThreads constant 4 < thread::hardware_concurrency()
             Node* selected = root->select();
             selected->ThreadMaster = true;
             selected->n += 1;
-            thread* t1 = new thread(&SearchThread::Start, selected);
-            threads.push_back(t1);
+            pool.enqueue(SearchThread::Start, selected);
         }
         
         t_depth = root->root_depth();

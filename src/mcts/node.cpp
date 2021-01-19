@@ -97,7 +97,7 @@ double Node::ucb1() {
     //cout << "log parent: " << log(mParent->n) << " sqrt log parent: " << sqrt(log(mParent->n)) << " parent: " << mParent->n << endl;
     // with policy (unmodified) : Q + policy + factor * sqrt(log(parent.n) / n)
     // with policy (modified) : Q + factor * sqrt(policy / (n + 1));
-    return q + 2 * sqrt(log(mParent->n) / (double(n) + 1.00));
+    return q + 5 * sqrt(log(mParent->n) / (double(n) + 1.00));
 }
 
 Node* Node::select_AB() {
