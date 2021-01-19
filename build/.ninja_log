@@ -1,0 +1,21 @@
+# ninja log v5
+5	324	632696558	0xA2.exe.p/src_chess_thc.cpp.obj	181a55f0e7b5bcd1
+6	332	632696558	0xA2.exe.p/src_mcts_Thread.cpp.obj	2ffd7cdb8e10b547
+0	348	632696558	0xA2.exe.p/src_mcts_evaluate.cc.obj	f20612a085e4ef80
+2	365	632696558	0xA2.exe.p/src_mcts_node.cpp.obj	44c98849811e851a
+3	390	632696558	0xA2.exe.p/src_uci.cpp.obj	71fb037128a8b94e
+10	542	632696558	0xA2.exe.p/src_engine.cpp.obj	529015e6b26d0d1b
+8	603	632696558	0xA2.exe.p/src_mcts_search.cpp.obj	993bcb0f450d3c5c
+604	653	632696558	0xA2.exe	b55ab83c0180cce9
+604	653	632696558	0xA2.pdb	b55ab83c0180cce9
+0	1026	632697982	build.ninja	2c285fbe709cf007
+1	1130	6326980343437922	build.ninja	2c285fbe709cf007
+7	338	6326980347723769	0xA2.exe.p/src_chess_thc.cpp.obj	181a55f0e7b5bcd1
+4	339	6326980347723769	0xA2.exe.p/src_mcts_Thread.cpp.obj	2ffd7cdb8e10b547
+5	340	6326980347763802	0xA2.exe.p/src_mcts_evaluate.cc.obj	f20612a085e4ef80
+0	370	6326980348054073	0xA2.exe.p/src_mcts_node.cpp.obj	44c98849811e851a
+8	420	6326980348554527	0xA2.exe.p/src_uci.cpp.obj	71fb037128a8b94e
+27	545	6326980349815684	0xA2.exe.p/src_engine.cpp.obj	529015e6b26d0d1b
+2	620	6326980350546340	0xA2.exe.p/src_mcts_search.cpp.obj	993bcb0f450d3c5c
+620	671	6326980351006754	0xA2.exe	b55ab83c0180cce9
+620	671	6326980351006754	0xA2.pdb	b55ab83c0180cce9

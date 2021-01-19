@@ -31,6 +31,8 @@ using namespace std;
 using namespace chrono;
 int main(int argc, const char* argv[]) {
 
+	string version = "0.0.5";
+
 	hash<string> hasher;
 
 	size_t hash = hasher(__TIMESTAMP__); // making hash of compile timestamp (e.g 'Fri May  5 4:29:26 2017')
@@ -43,7 +45,7 @@ int main(int argc, const char* argv[]) {
 	size_t hash1 = hasher(sService); // hashing again for more diversity in hashing (more difference in hashes)
 
 	// arguments
-	int rply = 5;
+	int rply = 4;
 
 	cout << " _         __\n";
 	cout << "| | \\/ _   __|\n";
