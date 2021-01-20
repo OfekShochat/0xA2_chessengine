@@ -30,41 +30,41 @@ float evaluator::evaluate(string board) {
     for (auto piece = b.cbegin(); piece != b.cend(); ++piece) {
 		switch (*piece) {
 		case 'P': 
-			evaluation += 0.1;
+			evaluation += 100;
 			break;
 		case 'R':
-            evaluation += 0.5;
+            evaluation += 500;
 			break;
 		case 'N':
-			evaluation += 0.32;
+			evaluation += 320;
 			break;
 		case 'B':
-			evaluation += 0.34;
+			evaluation += 340;
 			break;
 		case 'Q':
-			evaluation += 0.9;
+			evaluation += 900;
 			break;
 		case 'K':
-			evaluation += 20.0;
+			evaluation += 2000;
 			break;
 
 		case 'p': 
-			evaluation += -0.1;
+			evaluation += -100;
 			break;
 		case 'r':
-			evaluation += -0.5;
+			evaluation += -500;
 			break;
 		case 'n':
-			evaluation += -0.32;
+			evaluation += -320;
 			break;
 		case 'b':
-			evaluation += -0.34;
+			evaluation += -340;
 			break;
 		case 'q':
-			evaluation += -0.9;
+			evaluation += -900;
 			break;
 		case 'k':
-			evaluation += -20.0;
+			evaluation += -2000;
 			break;
 		}
 	}

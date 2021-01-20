@@ -44,6 +44,8 @@ int Node::depth() {
     int i = 0;
     while (true) {
         i += 1;
+        if (!current)
+            break;
         if (!current->is_expanded)
             break;
         current = current->getbest();
@@ -56,14 +58,13 @@ void Node::update(float result) {
     Node* current = this;
     int turn_factor = 1;
     if (!turn)
-        int turn_factor = -1;
+        turn_factor = -1;
     while (current->mParent != NULL || !current->ThreadMaster != true) {
         current->n += 1;
-        current->w += result;
+        current->w += result * turn_factor;
         current->q = w / n;
         current = current->mParent;
         turn_factor *= -1;
-        result = result*turn_factor;
     }
     current->w += result;
     current->q = w / n;
@@ -71,7 +72,7 @@ void Node::update(float result) {
 
 Node* Node::select() {
     // returns the node with the max of the ucb1 values of children.
-    double max = -999.0;
+    double max = -999999.0;
     Node* selected{};
     for (auto& child : children) {
         double ucbv = child->ucb1();
@@ -85,6 +86,8 @@ Node* Node::select() {
             //cout << selected->mMove << " " << max << endl;
         }
     }
+    if (!selected)
+        cout << max << endl;
     return selected;
 }
 
@@ -97,21 +100,27 @@ double Node::ucb1() {
     //cout << "log parent: " << log(mParent->n) << " sqrt log parent: " << sqrt(log(mParent->n)) << " parent: " << mParent->n << endl;
     // with policy (unmodified) : Q + policy + factor * sqrt(log(parent.n) / n)
     // with policy (modified) : Q + factor * sqrt(policy / (n + 1));
-    return q + 5 * sqrt(log(mParent->n) / (double(n) + 1.00));
+    return q + 1.675 * sqrt(log(mParent->n) / (double(n) + 1.00));
 }
 
 Node* Node::select_AB() {
     // selects leaf node from root
     Node* current = this;
+    Node* previous;
     while (true) {
         if (!current->is_expanded) {
             //cout << current->mBoard << " is not expanded\n";
             break;
         }
         //cout << "selecting\n";
+        previous = current;
         current = current->select();
-        if (!current)
+        if (!current) {
+            cout << previous->mBoard << endl;
             cout << "none oof" << endl;
+            cout << previous->is_expanded << endl;
+            
+        }
     }
     return current;
 }
@@ -149,6 +158,11 @@ Node* Node::getbest() {
     Node* selected{};
     for (auto& child : children) {
         //cout << ucbv << "\n";
+        if (child->n == max) {
+            if (child->q>selected->q) {
+                selected = child;
+            }
+        }
         if (child->n > max) {
             selected = child;
             max = child->n;
@@ -158,6 +172,7 @@ Node* Node::getbest() {
     return selected;
 }
 
+/*
 float Node::AB_evaluate() {
     // temp values for beta and search depth. this should be customizable.
     float alpha = -1000.0;
@@ -213,4 +228,18 @@ float Node::AB(string fen, float alpha, float beta, int depth, int color) {
             alpha = score;
     }
     return alpha;
+}
+*/
+
+void Node::root_delTree() {
+    for (auto const& i : children) {
+        i->delTree();
+    }
+}
+
+void Node::delTree() {
+    for (auto const& i : children) {
+        i->delTree();
+    }
+    delete this;
 }

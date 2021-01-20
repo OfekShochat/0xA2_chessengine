@@ -129,7 +129,7 @@ void uci::processgo(string cmd, string fen) {
 			break;
 		}
 		else if (tt) {
-			s = new Search(fen, 0, 0, stoi(t));
+			s = new Search(fen, 0, 0, stoi(t), true);
 			break;
 		}
 		cout << "d: " << d << " n: " << n << " tt: " << tt << endl;
@@ -137,6 +137,7 @@ void uci::processgo(string cmd, string fen) {
 	s->go();
 	Node* best = s->root->getbest();
 	cout << best->mMove << " " << best->n << endl;
+	s->root->root_delTree();
 }
 
 string uci::processpos(string cmd) {

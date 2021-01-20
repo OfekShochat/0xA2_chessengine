@@ -55,14 +55,14 @@ public:
     void expand();
     Node* select_AB();
     Node* getbest();
-    float AB_evaluate();
+    //float AB_evaluate();
     int depth();
     int root_depth();
     int ABn = 0;
     Node* select();
+    void delTree();
+    void root_delTree();
 private:
-    evaluator* eval = new evaluator();
     double ucb1();
-    
-    float AB(string fen, float alpha, float beta, int depth, int turn);
+    //float AB(string fen, float alpha, float beta, int depth, int turn);
 };

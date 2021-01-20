@@ -30,7 +30,7 @@ using namespace chrono;
 
 class Search {
 public:
-	Search(string b, int d = 0, int n = 0, int tt = 0, bool timemm = false);
+	Search(string b, int d = 0, int n = 0, int tt = 0, bool stimemm = false);
 	string mBoard;
 	int depth;
 	int nodes;

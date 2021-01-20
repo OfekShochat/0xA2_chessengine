@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 using namespace std;
 
-class evaluator {
-public:
+namespace evaluator {
     float evaluate(string board);
 };
