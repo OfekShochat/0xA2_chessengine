@@ -25,7 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <thread>
 //#include "../neural/tensorflow/use.h"
 
-using namespace std;
 using namespace chrono;
 
 class Search {
