@@ -44,7 +44,7 @@ public:
     int n = 0;
     float q = 0;
     float w = 0;
-    bool turn;
+    bool turn = false;
     bool ThreadMaster = false;
     // default values for first seen search
     bool is_expanded = false;

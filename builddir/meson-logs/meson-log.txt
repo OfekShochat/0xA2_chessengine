@@ -1,0 +1,21 @@
+Build started at 2021-01-21T16:49:41.141009
+Main binary: c:\users\user\appdata\local\programs\python\python38\python.exe
+Build Options: -Dbuildtype=debug
+Python system: Windows
+The Meson build system
+Version: 0.56.0
+Source dir: C:\Users\User\Documents\GitHub\0xA2_chessengine
+Build dir: C:\Users\User\Documents\GitHub\0xA2_chessengine\builddir
+Build type: native build
+Project name: 0xA2_chessengine
+Project version: 0.0.6
+None of 'CXX' are defined in the environment, not changing global flags.
+
+meson.build:1:0: ERROR: Unknown compiler(s): ['icl', 'cl', 'c++', 'g++', 'clang++', 'clang-cl']
+The follow exceptions were encountered:
+Running "icl " gave "[WinError 2] The system cannot find the file specified"
+Running "cl /?" gave "[WinError 2] The system cannot find the file specified"
+Running "c++ --version" gave "[WinError 2] The system cannot find the file specified"
+Running "g++ --version" gave "[WinError 2] The system cannot find the file specified"
+Running "clang++ --version" gave "[WinError 2] The system cannot find the file specified"
+Running "clang-cl /?" gave "[WinError 2] The system cannot find the file specified"

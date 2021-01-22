@@ -40,6 +40,11 @@ Search::Search(string b, int d, int n, int tt, bool stimemm) {
 }
 
 Node* Search::go() {
+
+    root->mBoard = mBoard;
+
+    cout << "ddd: " << root->mBoard << endl;
+
     auto st = high_resolution_clock::now();
 
     int managedtime = timem();
@@ -61,7 +66,9 @@ Node* Search::go() {
         t_depth = root->root_depth();
         if (t_depth > p_depth) {
             p_depth = t_depth;
-            cout << "info depth " << t_depth << " score " << root->getbest()->q << " pv " << root->getbest()->mMove << endl;
+            auto current = high_resolution_clock::now();
+            auto duration = duration_cast<milliseconds>(current - st);
+            cout << "info depth " << t_depth << " score " << root->getbest()->q << " nodes " << root->n << " time " << duration.count() << " pv " << root->getbest()->mMove << endl;
         }
         
         /*while (true) {
