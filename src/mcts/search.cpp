@@ -68,7 +68,7 @@ Node* Search::go() {
             p_depth = t_depth;
             auto current = high_resolution_clock::now();
             auto duration = duration_cast<milliseconds>(current - st);
-            cout << "info depth " << t_depth << " score " << root->getbest()->q << " nodes " << root->n << " time " << duration.count() << " pv " << root->getbest()->mMove << endl;
+            cout << "info depth " << t_depth << " score " << root->getbest()->q << " nodes " << root->n << " nps " << int(root->n/(duration.count()/1000+0.01)) << " time " << duration.count() << " pv " << root->getbest()->mMove << endl;
         }
         
         /*while (true) {

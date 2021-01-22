@@ -24,47 +24,47 @@ float evaluator::evaluate(string board) {
     const char* c = board.c_str();
     cr.Forsyth(c);
 
-    float evaluation = 0.0;
+    double evaluation = 0.0;
 
     string b = cr.ToDebugStr();
     for (auto piece = b.cbegin(); piece != b.cend(); ++piece) {
 		switch (*piece) {
 		case 'P': 
-			evaluation += 100;
+			evaluation += 1;
 			break;
 		case 'R':
-            evaluation += 500;
+            evaluation += 5;
 			break;
 		case 'N':
-			evaluation += 320;
+			evaluation += 3.2;
 			break;
 		case 'B':
-			evaluation += 340;
+			evaluation += 3.4;
 			break;
 		case 'Q':
-			evaluation += 900;
+			evaluation += 9;
 			break;
 		case 'K':
-			evaluation += 2000;
+			evaluation += 200;
 			break;
 
 		case 'p': 
-			evaluation += -100;
+			evaluation += -1;
 			break;
 		case 'r':
-			evaluation += -500;
+			evaluation += -5;
 			break;
 		case 'n':
-			evaluation += -320;
+			evaluation += -3.2;
 			break;
 		case 'b':
-			evaluation += -340;
+			evaluation += -3.4;
 			break;
 		case 'q':
-			evaluation += -900;
+			evaluation += -9;
 			break;
 		case 'k':
-			evaluation += -2000;
+			evaluation += -200;
 			break;
 		}
 	}

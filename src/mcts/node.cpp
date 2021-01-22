@@ -59,7 +59,7 @@ void Node::update(float result) {
     int turn_factor = 1;
     if (!turn)
         turn_factor = -1;
-    while (current->mParent != NULL || !current->ThreadMaster != true) {
+    while (!current->ThreadMaster) {
         current->n += 1;
         current->w += result * turn_factor;
         current->q = w / n;
@@ -86,13 +86,16 @@ Node* Node::select() {
             //cout << selected->mMove << " " << max << endl;
         }
     }
+    if (!selected) {
+        cout << "the heck is going on: " << children.size() << " " << mBoard << endl;
+    }
     return selected;
 }
 
 double Node::ucb1() {
     // ucb1 function used for policy.
     //cout << log(mParent->n) << "\n";
-    if (mParent && mParent == 0) {
+    if (n == 0) {
         return 100000.00;
     }
     //cout << "log parent: " << log(mParent->n) << " sqrt log parent: " << sqrt(log(mParent->n)) << " parent: " << mParent->n << endl;
@@ -106,12 +109,8 @@ Node* Node::select_AB() {
     Node* current = this;
     Node* previous;
     int d = 0;
-    while (true) {
+    while (current->is_expanded && !current->children.empty()) {
         d += 1;
-        if (!current->is_expanded) {
-            //cout << current->mBoard << " is not expanded\n";
-            break;
-        }
         //cout << "selecting\n";
         previous = current;
         current = current->select();

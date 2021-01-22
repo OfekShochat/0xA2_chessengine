@@ -68,7 +68,7 @@ void uci::uciok() {
 	cout << "option name netPath type pathString default ./networks/net.pb" << endl;
 	cout << "uciok" << endl;
 }
-
+	
 bool uci::init() {
 	// here should be net object definition(check in here function if it has been definedand if not, define it).
 	/*ifstream infile("./networks/net.pb");
