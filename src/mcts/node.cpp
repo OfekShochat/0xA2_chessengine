@@ -72,7 +72,7 @@ void Node::update(float result) {
 
 Node* Node::select() {
     // returns the node with the max of the ucb1 values of children.
-    double max = -999999.0;
+    double max = -99999999.0;
     Node* selected{};
     for (auto& child : children) {
         double ucbv = child->ucb1();
