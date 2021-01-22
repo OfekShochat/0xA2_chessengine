@@ -1,5 +1,5 @@
 [options]
-backend = ninja
+buildtype = release
 
 [properties]
 

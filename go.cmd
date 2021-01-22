@@ -1,2 +1,2 @@
 @echo off
-"./build/0xA2.exe"
+"./builddir/0xA2.exe"

@@ -15,7 +15,7 @@ rule cpp_COMPILER
 # Rules for linking.
 
 rule cpp_LINKER
- command = "link" $ARGS /MACHINE:x64 /OUT:$out $in $LINK_ARGS
+ command = "link" $ARGS /MACHINE:x86 /OUT:$out $in $LINK_ARGS
  description = Linking target $out
 
 # Other rules
@@ -26,7 +26,7 @@ rule CUSTOM_COMMAND
  restat = 1
 
 rule REGENERATE_BUILD
- command = "C:\Users\User\AppData\Local\Programs\Python\Python38\Scripts\meson" "--internal" "regenerate" "C:\Users\User\Documents\GitHub\0xA2_chessengine" "C:\Users\User\Documents\GitHub\0xA2_chessengine\build" "--backend" "ninja"
+ command = "C:\Users\o\AppData\Local\Programs\Python\Python38\Scripts\meson" "--internal" "regenerate" "D:\GitHub\0xA2_chessengine" "D:\GitHub\0xA2_chessengine\builddir" "--backend" "ninja"
  description = Regenerating build files.
  generator = 1
 
@@ -77,14 +77,14 @@ build 0xA2.exe: cpp_LINKER 0xA2.exe.p/src_engine.cpp.obj 0xA2.exe.p/src_uci.cpp.
 # Test rules
 
 build meson-test: CUSTOM_COMMAND all PHONY
- COMMAND = "C:\Users\User\AppData\Local\Programs\Python\Python38\Scripts\meson" "test" "--no-rebuild" "--print-errorlogs"
+ COMMAND = "C:\Users\o\AppData\Local\Programs\Python\Python38\Scripts\meson" "test" "--no-rebuild" "--print-errorlogs"
  DESC = Running$ all$ tests.
  pool = console
 
 build test: phony meson-test
 
 build meson-benchmark: CUSTOM_COMMAND all PHONY
- COMMAND = "C:\Users\User\AppData\Local\Programs\Python\Python38\Scripts\meson" "test" "--benchmark" "--logbase" "benchmarklog" "--num-processes=1" "--no-rebuild"
+ COMMAND = "C:\Users\o\AppData\Local\Programs\Python\Python38\Scripts\meson" "test" "--benchmark" "--logbase" "benchmarklog" "--num-processes=1" "--no-rebuild"
  DESC = Running$ benchmark$ suite.
  pool = console
 
@@ -94,14 +94,14 @@ build benchmark: phony meson-benchmark
 
 build meson-install: CUSTOM_COMMAND PHONY | all
  DESC = Installing$ files.
- COMMAND = "C:\Users\User\AppData\Local\Programs\Python\Python38\Scripts\meson" "install" "--no-rebuild"
+ COMMAND = "C:\Users\o\AppData\Local\Programs\Python\Python38\Scripts\meson" "install" "--no-rebuild"
  pool = console
 
 build install: phony meson-install
 
 build meson-dist: CUSTOM_COMMAND PHONY
  DESC = Creating$ source$ packages
- COMMAND = "C:\Users\User\AppData\Local\Programs\Python\Python38\Scripts\meson" "dist"
+ COMMAND = "C:\Users\o\AppData\Local\Programs\Python\Python38\Scripts\meson" "dist"
  pool = console
 
 build dist: phony meson-dist
@@ -109,7 +109,7 @@ build dist: phony meson-dist
 # Suffix
 
 build meson-uninstall: CUSTOM_COMMAND PHONY
- COMMAND = "C:\Users\User\AppData\Local\Programs\Python\Python38\Scripts\meson" "--internal" "uninstall"
+ COMMAND = "C:\Users\o\AppData\Local\Programs\Python\Python38\Scripts\meson" "--internal" "uninstall"
  pool = console
 
 build uninstall: phony meson-uninstall
@@ -119,7 +119,7 @@ build all: phony 0xA2.exe
 build clean: phony meson-clean
 
 build meson-clean: CUSTOM_COMMAND PHONY
- COMMAND = "C:\Users\User\AppData\Local\Programs\Python\Python38\Scripts\ninja.EXE" "-t" "clean"
+ COMMAND = "C:\Users\o\AppData\Local\Programs\Python\Python38\Scripts\ninja.EXE" "-t" "clean"
  description = Cleaning
 
 build build.ninja: REGENERATE_BUILD ../meson.build ../meson_options.txt meson-private/coredata.dat
