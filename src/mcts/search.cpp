@@ -48,11 +48,9 @@ Node* Search::go() {
     int p_depth = 0; 
 
     ThreadPool pool(thread::hardware_concurrency()/2);
-
+    root->n += 1;
     root->expand();
     while (true) {
-        root->n += 1;
-        n += 1; // activeThreads constant 4 < thread::hardware_concurrency()
         Node* selected = root->select();
         if (!selected)
             cout << root->select() << endl;
@@ -109,7 +107,7 @@ Node* Search::go() {
         }
         
         if (nodes != 0) {
-            if (n >= nodes) {
+            if (root->n >= nodes) {
                 auto current = high_resolution_clock::now();
                 auto duration = duration_cast<milliseconds>(current - st);
             

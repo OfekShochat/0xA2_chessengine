@@ -86,8 +86,6 @@ Node* Node::select() {
             //cout << selected->mMove << " " << max << endl;
         }
     }
-    if (!selected)
-        cout << max << endl;
     return selected;
 }
 
@@ -107,7 +105,9 @@ Node* Node::select_AB() {
     // selects leaf node from root
     Node* current = this;
     Node* previous;
+    int d = 0;
     while (true) {
+        d += 1;
         if (!current->is_expanded) {
             //cout << current->mBoard << " is not expanded\n";
             break;
@@ -117,6 +117,7 @@ Node* Node::select_AB() {
         current = current->select();
         if (!current) {
             cout << previous->mBoard << endl;
+            cout << previous->children.size() << endl;
             cout << "none oof" << endl;
             cout << previous->is_expanded << endl;
             
