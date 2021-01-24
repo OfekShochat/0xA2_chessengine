@@ -60,6 +60,7 @@ Node* Search::go() {
         if (!selected)
             cout << root->select() << endl;
         selected->ThreadMaster = true;
+        selected->InUse = true;
         selected->n += 1;
         pool.enqueue(SearchThread::Start, selected);
         
