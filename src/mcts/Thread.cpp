@@ -9,5 +9,5 @@ void SearchThread::Start(Node* selected) {
     AB->expand();
     AB->update(evaluator::evaluate(selected->mBoard));
     selected->mParent->n += 1;
-    AB->InUse = false;
+    selected->inUse = false;
 }
