@@ -30,6 +30,11 @@ Node::Node(string b, string m, Node* p) { // with policy: , float pl
     mMove = m;
     mParent = p;
 }
+Node::~Node() {
+    for (Node* const& child : children) {
+        delete child;
+    }
+}
 
 int Node::root_depth() {
     int d_ = 0;
@@ -72,12 +77,15 @@ void Node::update(float result) {
 
 Node* Node::select() {
     // returns the node with the max of the ucb1 values of children.
-    double max = -99999999.0;
+    double max = -99999.0;
     Node* selected{};
-    for (auto& child : children) {
-        double ucbv = child->ucb1();
+    double ucbv;
+    for (Node*& child : children) {
+        ucbv = child->ucb1();
+        
         if (ucbv == 100000.00) {
             selected = child;
+            max = ucbv;
             break;
         }
         if (ucbv > max) {
@@ -88,6 +96,8 @@ Node* Node::select() {
     }
     if (!selected) {
         cout << "the heck is going on: " << children.size() << " " << mBoard << endl;
+        cout << ucbv << endl;
+        cout << max << endl;
     }
     return selected;
 }
@@ -101,7 +111,10 @@ double Node::ucb1() {
     //cout << "log parent: " << log(mParent->n) << " sqrt log parent: " << sqrt(log(mParent->n)) << " parent: " << mParent->n << endl;
     // with policy (unmodified) : Q + policy + factor * sqrt(log(parent.n) / n)
     // with policy (modified) : Q + factor * sqrt(policy / (n + 1));
-    return q + 1.675 * sqrt(log(mParent->n) / (double(n) + 1.00));
+    if (!inUse)
+        return q + 1.675 * sqrt(log(mParent->n) / (double(n) + 1.00));
+    else
+        return -99999.0;
 }
 
 Node* Node::select_AB() {
@@ -230,16 +243,3 @@ float Node::AB(string fen, float alpha, float beta, int depth, int color) {
     return alpha;
 }
 */
-
-void Node::root_delTree() {
-    for (auto const& i : children) {
-        i->delTree();
-    }
-}
-
-void Node::delTree() {
-    for (auto const& i : children) {
-        i->delTree();
-    }
-    delete this;
-}

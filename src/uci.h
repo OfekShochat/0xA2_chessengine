@@ -22,16 +22,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "mcts/search.h"
 #include <list>
 #include <sstream>
+#include <fstream>
 using namespace std;
 
 class uci {
 public:
+	uci();
 	void loop();
+
 private:
 
 	//Net* nn = NULL;
 	Search* s = NULL;
-
+	ofstream myfile;
+	
 	string processpos(string cmd);
 	void isready(); // implemintation: filesystem::exists("helloworld.txt");
 	void uciok();

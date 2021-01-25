@@ -48,18 +48,19 @@ Node* Search::go() {
     auto st = high_resolution_clock::now();
 
     int managedtime = timem();
+    //cout << managedtime << endl;
 
     int t_depth;
     int p_depth = 0; 
 
+    //cout << "spawning " << thread::hardware_concurrency()/2 << " processes" << endl;
     ThreadPool pool(thread::hardware_concurrency()/2);
     root->n += 1;
     root->expand();
     while (true) {
         Node* selected = root->select();
-        if (!selected)
-            cout << root->select() << endl;
         selected->ThreadMaster = true;
+        selected->inUse = true;
         selected->n += 1;
         pool.enqueue(SearchThread::Start, selected);
         
@@ -100,8 +101,10 @@ Node* Search::go() {
             if (timemanage) {
                 auto current = high_resolution_clock::now();
                 auto duration = duration_cast<milliseconds>(current - st);
-                if (duration.count() > managedtime)
+                if (duration.count() >= managedtime) {
+                    cout << duration.count() << endl;
                     break;
+                }
             }
             else {
                 auto current = high_resolution_clock::now();
@@ -123,9 +126,9 @@ Node* Search::go() {
         }
     }
     pool.~ThreadPool();
-    for (auto const& i : root->children) {
+    /*for (auto const& i : root->children) {
         cout << i->mMove << " " << i->n << " " << i->q << endl;
-    }
+    }*/
     
     return root;
 }

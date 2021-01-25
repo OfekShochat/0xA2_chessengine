@@ -1,6 +1,6 @@
-Build started at 2021-01-22T09:38:40.556018
+Build started at 2021-01-24T10:34:12.010124
 Main binary: c:\users\o\appdata\local\programs\python\python38\python.exe
-Build Options: -Dbuildtype=release
+Build Options: 
 Python system: Windows
 The Meson build system
 Version: 0.56.2

@@ -1,5 +1,4 @@
 [options]
-buildtype = release
 
 [properties]
 

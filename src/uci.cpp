@@ -24,20 +24,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <sstream>
 #include "mcts/search.h"
 #include "chess/thc.h"
+#include <fstream>
 
 using namespace std;
 
+uci::uci() {
+	myfile.open("logfile.log", ios::out);
+}
+
 void uci::loop() {
 	string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-
+	
 	while (true) {
 		string cmd;
 		getline(cin, cmd);
-		//istringstream& ss(cmd);
+		myfile << "< " << cmd << "\n";
+		myfile.flush();
+		//istringstream& ss(cmd)
 
 		string first = cmd.substr(0, cmd.find(" "));
 
 		//cout << first << endl;
+		
 
 		if (first == "uci") {
 			uciok();
@@ -58,8 +66,8 @@ void uci::loop() {
 		else {
 			cout << "invalid command" << endl;
 		}
-		cout << "ddddddddddd: " << fen << endl;
 	}
+	myfile.close();
 }
 
 void uci::uciok() {
@@ -67,6 +75,12 @@ void uci::uciok() {
 	cout << "id author Ofek Shochat" << endl;
 	cout << "option name netPath type pathString default ./networks/net.pb" << endl;
 	cout << "uciok" << endl;
+	myfile << ">\n";
+	myfile << "id name 0xA2" << "\n";
+	myfile << "id author Ofek Shochat" << "\n";
+	myfile << "option name netPath type pathString default ./networks/net.pb" << "\n";
+	myfile << "uciok" << "\n";
+	myfile.flush();
 }
 	
 bool uci::init() {
@@ -84,6 +98,8 @@ void uci::isready() {
 	// temp implementation. 
 	if (init()) {
 		cout << "readyok" << endl;
+		myfile << ">" << "readyok" << "\n";
+		myfile.flush();
 	}
 	else {
 		cout << "notreadyok" << endl;
@@ -106,6 +122,7 @@ void uci::processgo(string cmd, string fen) {
 	bool d = false;
 	bool n = false;
 	bool tt = false;
+	bool tma = false; 
 	tokens >> t;
 	while (tokens >> t) {
 		if (t == "depth") {
@@ -120,6 +137,10 @@ void uci::processgo(string cmd, string fen) {
 			tokens >> t;
 			tt = true;
 		}
+		else if (t == "wtime" || t == "btime") {
+			tokens >> t;
+			tma = true;
+		}
 
 		if (d) {
 			s = new Search(fen, stoi(t), 0, 0);
@@ -130,18 +151,25 @@ void uci::processgo(string cmd, string fen) {
 			break;
 		}
 		else if (tt) {
-			s = new Search(fen, 0, 0, stoi(t), true);
+			s = new Search(fen, 0, 0, stoi(t));
+			break;
+		}
+		else if (tma) {
+			s = new Search(fen, 0,0, stoi(t), true);
 			break;
 		}
 	}
 	s->go();
 	Node* best = s->root->getbest();
-	s->root->root_delTree();
+	cout << "bestmove " << best->mMove << endl;
+	myfile << ">" << "bestmove " << best->mMove << "\n";
+	myfile.flush();
+	delete s->root;
 }
 
 string uci::processpos(string cmd) {
 	string t;
-
+	thc::ChessRules cr;
 	istringstream tokens(cmd);
 
 	bool f = false;
@@ -151,8 +179,10 @@ string uci::processpos(string cmd) {
 	string ff;
 	tokens >> t;
 	while (tokens >> t) {
-		if (t == "startpos")
-			return "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		if (t == "startpos") {
+			ff = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+			more = true;
+		}
 		else if (t == "fen") {
 			f = true;
 		}
@@ -164,9 +194,14 @@ string uci::processpos(string cmd) {
 		else if (more) {
 			if (t == "moves")
 				moves = true;
+				more = false;
 		}
 		else if (moves) {
-			
+			thc::Move mv;
+			mv.TerseIn(&cr, t.c_str());
+			cr.PlayMove(mv);
+			cout << cr.ToDebugStr() << endl;
+			ff = cr.ForsythPublish();
 		}
 	}
 	return ff;

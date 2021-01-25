@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 #include <iostream>
 #include <string>
-#include <list>
+#include <vector>
 #include "evaluate.h"
 using namespace std;
 
@@ -46,11 +46,13 @@ public:
     float w = 0;
     bool turn = false;
     bool ThreadMaster = false;
+    bool inUse = false;
     // default values for first seen search
     bool is_expanded = false;
-    list<Node*> children = {};
+    vector<Node*> children = {};
 
     // function definition
+    ~Node();
     void update(float result);
     void expand();
     Node* select_AB();
@@ -60,8 +62,6 @@ public:
     int root_depth();
     int ABn = 0;
     Node* select();
-    void delTree();
-    void root_delTree();
 private:
     double ucb1();
     //float AB(string fen, float alpha, float beta, int depth, int turn);
