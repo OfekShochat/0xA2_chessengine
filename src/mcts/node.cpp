@@ -22,8 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "chess/thc.h"
 #include "mcts/node.h"
 #include <vector>
+#include <mutex>
 #include "evaluate.h"
 using namespace std;
+
+mutex m;
 
 Node::Node(string b, string m, Node* p) { // with policy: , float pl 
     mBoard = b;
@@ -111,10 +114,10 @@ double Node::ucb1() {
     //cout << "log parent: " << log(mParent->n) << " sqrt log parent: " << sqrt(log(mParent->n)) << " parent: " << mParent->n << endl;
     // with policy (unmodified) : Q + policy + factor * sqrt(log(parent.n) / n)
     // with policy (modified) : Q + factor * sqrt(policy / (n + 1));
-    if (!inUse)
-        return q + 1.675 * sqrt(log(mParent->n) / (double(n) + 1.00));
-    else
+    if (inUse) {
         return -99999.0;
+    }
+    return q + 1.675 * sqrt(log(mParent->n) / (double(n) + 1.00));
 }
 
 Node* Node::select_AB() {
@@ -123,7 +126,7 @@ Node* Node::select_AB() {
     Node* previous;
     int d = 0;
     while (current->is_expanded && !current->children.empty()) {
-        d += 1;
+        d++;
         //cout << "selecting\n";
         previous = current;
         current = current->select();
@@ -139,6 +142,7 @@ Node* Node::select_AB() {
 }
 
 void Node::expand() {
+    lock_guard<mutex> lock(m);
     is_expanded = true;
     thc::ChessRules cr;
 
@@ -171,6 +175,9 @@ Node* Node::getbest() {
     Node* selected{};
     for (auto& child : children) {
         //cout << ucbv << "\n";
+        while (child->m.try_lock()) {
+            this_thread::sleep_for(chrono::milliseconds(1));
+        }
         if (child->n == max) {
             if (child->q>selected->q) {
                 selected = child;

@@ -9,7 +9,7 @@ import chess
 import numpy as np
 
 EPOCHS = 100
-BATCH_SIZE = 8192 
+BATCH_SIZE = 2048 
 
 def get_piece_val(piece:str):
    temp = 0
@@ -63,14 +63,20 @@ class Net(nn.Module):
         self.fc1 = nn.Linear(256, 512)
         self.fc2 = nn.Linear(512, 32)
         self.fc3 = nn.Linear(32, 32)
-        self.fc4 = nn.Linear(32, 1)
+        self.fc4 = nn.Linear(32, 512)
+        for i in range(5, 512-5):
+            exec("self.fc{} = nn.Linear(512, 512)".format(i))
+        self.fc507 = nn.Linear(512, 1)
 
     def forward(self, x):
         x = F.relu(self.fc0(x))
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = F.relu(self.fc3(x))
-        x = torch.tanh(self.fc4(x))
+        x = F.relu(self.fc4(x))
+        for i in range(5, 512-5):
+            exec("x = F.relu(self.fc{}(x))".format(i))
+        x = torch.tanh(self.fc507(x))
         return x
 
 class dset(Dataset):
@@ -78,17 +84,24 @@ class dset(Dataset):
         pretargets = open("targets.dat").readlines()
         predata = open("data.dat").readlines()
         self.x = []
+        deletes = []
         for i in predata:
             try:
                 self.x.append(make(i))
             except ValueError:
                 print(predata.index(i), i)
+                deletes.append(i)
         self.y = []
         for i in pretargets:
-            self.y.append(float(i))
+            if not i in deletes:
+                self.y.append(float(i))
     def __getitem__(self, index):
-        return self.x[index], self.y[index]
+        try:
+            return self.x[index], self.y[index]
+        except IndexError:
+            print(index, len(self.x), len(self.y))
     def __len__(self):
+        assert(len(self.x) == len(self.y))
         return len(self.x)
 
 net = Net()
@@ -149,7 +162,7 @@ for epoch in range(EPOCHS):
             running_loss = 0.0
         step += 1"""
     
-torch.save(net.state_dict(), "model.pt")
+torch.save(net.state_dict(), "model512.pt")
 """print("test:")
 while True:
     i = input("% ")

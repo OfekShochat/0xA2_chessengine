@@ -60,7 +60,6 @@ Node* Search::go() {
     while (true) {
         Node* selected = root->select();
         selected->ThreadMaster = true;
-        selected->inUse = true;
         selected->n += 1;
         pool.enqueue(SearchThread::Start, selected);
         

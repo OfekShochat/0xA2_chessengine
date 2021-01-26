@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <string>
 #include <vector>
+#include <mutex>
 #include "evaluate.h"
 using namespace std;
 
@@ -41,16 +42,16 @@ public:
     string mMove;
     string mBoard;
     
+    mutex m;
     int n = 0;
     float q = 0;
     float w = 0;
     bool turn = false;
     bool ThreadMaster = false;
-    bool inUse = false;
     // default values for first seen search
     bool is_expanded = false;
     vector<Node*> children = {};
-
+    bool inUse = false;
     // function definition
     ~Node();
     void update(float result);
