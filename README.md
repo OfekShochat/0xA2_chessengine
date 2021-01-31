@@ -3,7 +3,7 @@
 0xA2 is a chess engine that uses a0 methods (or lc0) to play chess. but it performs a shallow alpha beta search with a neural network evaluation.             
 also known by MCαβ (monte carlo alpha beta, see https://www.chessprogramming.org/MC%CE%B1%CE%B2)
 
-if you want to talk with me, you can join here! https://discord.gg/cTeagCWtMA
+if you want to talk with me, you can join here!
 
 ## current workings ##
 import caffe or caffe2 into the project. if someone has caffe as a lib or a lib structure (without /include /src) and with the protobuf file unzipped it would be great.       
