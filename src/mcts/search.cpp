@@ -37,13 +37,14 @@ Search::Search(string b, int d, int n, int tt, bool stimemm) {
     nodes = n;
     t = tt;
     timemanage = stimemm;
+    const char* c = mBoard.c_str();
+    cr.Forsyth(c);
+    root = new Node(cr);
 }
 
 Node* Search::go() {
-
-    root->mBoard = mBoard;
-
-    cout << "ddd: " << root->mBoard << endl;
+    Node* root = new Node(cr);
+    cout << "ddd: " << root->mBoard.ForsythPublish() << endl;
 
     auto st = high_resolution_clock::now();
 
@@ -53,7 +54,7 @@ Node* Search::go() {
     int t_depth;
     int p_depth = 0; 
 
-    //cout << "spawning " << thread::hardware_concurrency()/2 << " processes" << endl;
+    cout << "spawning " << thread::hardware_concurrency()/2 << " processes" << endl;
     ThreadPool pool(thread::hardware_concurrency()/2);
     root->n += 1;
     root->expand();
@@ -68,7 +69,8 @@ Node* Search::go() {
             p_depth = t_depth;
             auto current = high_resolution_clock::now();
             auto duration = duration_cast<milliseconds>(current - st);
-            cout << "info depth " << t_depth << " score " << root->getbest()->q << " nodes " << root->n << " nps " << int(root->n/(duration.count()/1000+0.01)) << " time " << duration.count() << " pv " << root->getbest()->mMove << endl;
+            Node* best = root->getbest();
+            cout << "info depth " << t_depth << " score " << best->q << " nodes " << root->n << " nps " << int(root->n*1000/(duration.count()+1)) << " time " << duration.count() << " pv " << best->mMove << endl;
         }
         
         /*while (true) {
@@ -101,11 +103,9 @@ Node* Search::go() {
                 auto current = high_resolution_clock::now();
                 auto duration = duration_cast<milliseconds>(current - st);
                 if (duration.count() >= managedtime) {
-                    cout << duration.count() << endl;
                     break;
                 }
-            }
-            else {
+            } else {
                 auto current = high_resolution_clock::now();
                 auto duration = duration_cast<milliseconds>(current - st);
                 if (duration.count() > t) {
@@ -115,7 +115,7 @@ Node* Search::go() {
             }
         }
         
-        if (nodes != 0) {
+        else if (nodes != 0) {
             if (root->n >= nodes) {
                 auto current = high_resolution_clock::now();
                 auto duration = duration_cast<milliseconds>(current - st);
@@ -123,6 +123,10 @@ Node* Search::go() {
                 break;
             }
         }
+        else if (depth != 0 && t_depth > depth) {
+            break;
+        }
+
     }
     pool.~ThreadPool();
     /*for (auto const& i : root->children) {

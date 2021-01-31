@@ -6,7 +6,6 @@
 void SearchThread::Start(Node* selected) {
     Node* AB = selected->select_AB();
     AB->expand();
-    AB->update(evaluator::evaluate(selected->mBoard));
+    AB->update(evaluator::evaluate(selected->mBoard.ForsythPublish()));
     selected->mParent->n += 1;
-    AB->inUse = false;
 }

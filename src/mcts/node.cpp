@@ -24,11 +24,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 #include <mutex>
 #include "evaluate.h"
+
 using namespace std;
 
-mutex m;
-
-Node::Node(string b, string m, Node* p) { // with policy: , float pl 
+Node::Node(thc::ChessRules b, string m, Node* p) { // with policy: , float pl 
     mBoard = b;
     mMove = m;
     mParent = p;
@@ -41,6 +40,7 @@ Node::~Node() {
 
 int Node::root_depth() {
     int d_ = 0;
+    lock_guard<mutex> lock(mChildrenMutex);
     for (auto const& i : children) {
         d_ += i->depth();
     }
@@ -82,7 +82,8 @@ Node* Node::select() {
     // returns the node with the max of the ucb1 values of children.
     double max = -99999.0;
     Node* selected{};
-    double ucbv;
+    double ucbv = -99999.0;
+    lock_guard<mutex> lock(mChildrenMutex);
     for (Node*& child : children) {
         ucbv = child->ucb1();
         
@@ -98,7 +99,7 @@ Node* Node::select() {
         }
     }
     if (!selected) {
-        cout << "the heck is going on: " << children.size() << " " << mBoard << endl;
+        cout << "the heck is going on: " << children.size() << " " << mBoard.ForsythPublish() << endl;
         cout << ucbv << endl;
         cout << max << endl;
     }
@@ -114,16 +115,13 @@ double Node::ucb1() {
     //cout << "log parent: " << log(mParent->n) << " sqrt log parent: " << sqrt(log(mParent->n)) << " parent: " << mParent->n << endl;
     // with policy (unmodified) : Q + policy + factor * sqrt(log(parent.n) / n)
     // with policy (modified) : Q + factor * sqrt(policy / (n + 1));
-    if (inUse) {
-        return -99999.0;
-    }
     return q + 1.675 * sqrt(log(mParent->n) / (double(n) + 1.00));
 }
 
 Node* Node::select_AB() {
     // selects leaf node from root
     Node* current = this;
-    Node* previous;
+    Node* previous = NULL;
     int d = 0;
     while (current->is_expanded && !current->children.empty()) {
         d++;
@@ -131,7 +129,7 @@ Node* Node::select_AB() {
         previous = current;
         current = current->select();
         if (!current) {
-            cout << previous->mBoard << endl;
+            cout << previous->mBoard.ForsythPublish() << endl;
             cout << previous->children.size() << endl;
             cout << "none oof" << endl;
             cout << previous->is_expanded << endl;
@@ -142,42 +140,44 @@ Node* Node::select_AB() {
 }
 
 void Node::expand() {
-    lock_guard<mutex> lock(m);
+    if (is_expanded)
+        return;
+
     is_expanded = true;
-    thc::ChessRules cr;
 
     // converting string fen (mBoard) to char and loading the chess position.
     //cout << "loading pos\n";
-    const char* c = mBoard.c_str();
-    cr.Forsyth(c);
-    turn = cr.WhiteToPlay();
+    turn = mBoard.WhiteToPlay();
 
     //cout << "movegen\n";
     std::vector<bool> check;
     std::vector<bool> mate;
     std::vector<bool> stalemate;
     std::vector<thc::Move> moves;
-    cr.GenLegalMoveList(moves, check, mate, stalemate);
+    mBoard.GenLegalMoveList(moves, check, mate, stalemate);
     //cout << "expanding\n";
     // with policy: int i = 0;
     for (auto& move : moves) {
-        cr.PlayMove(move);
-        Node* thisNode = new Node(cr.ForsythPublish(), move.TerseOut(), this); // with policy: policy=policies[i]
-        children.push_back(thisNode);
-        cr.PopMove(move);
+        mBoard.PlayMove(move);
+        Node* thisNode = new Node(mBoard, move.TerseOut(), this); // with policy: policy=policies[i]
+        {
+            lock_guard<mutex> lock(mChildrenMutex);
+            children.push_back(thisNode);
+        }
+        
+        mBoard.PopMove(move);
         // with policy: i++;
     }
 }
 
 Node* Node::getbest() {
-    // returns the node with the max of the ucb1 values of children.
+    // returns the node with the max of the ucb1 values of children. poop
+    lock_guard<mutex> lock(mChildrenMutex);
+
     double max = -999.0;
     Node* selected{};
+    
     for (auto& child : children) {
-        //cout << ucbv << "\n";
-        while (child->m.try_lock()) {
-            this_thread::sleep_for(chrono::milliseconds(1));
-        }
         if (child->n == max) {
             if (child->q>selected->q) {
                 selected = child;

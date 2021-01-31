@@ -26,6 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#include "neural/tensorflow/use.h"
 #include "uci.h"
 #include "utils/commandline.h"
+#include <thread>
+#include <stdlib.h>
 
 using namespace std;
 using namespace chrono;
@@ -47,9 +49,12 @@ int main(int argc, const char* argv[]) {
 	// arguments
 	int rply = 20;
 
+	int t = thread::hardware_concurrency();
+
 	cout << " _         __\n";
 	cout << "| | \\/ _   __|\n";
 	cout << "|_| /\\|_|_|__ " << hex << hash1 << dec << endl;
+	cout << "Detected " << t/2 << " cores and " << t << " threads" << endl;
 	//cout << "built on " << __TIMESTAMP__ << endl;
 
 	/*

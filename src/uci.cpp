@@ -159,8 +159,7 @@ void uci::processgo(string cmd, string fen) {
 			break;
 		}
 	}
-	s->go();
-	Node* best = s->root->getbest();
+	Node* best = s->go()->getbest();
 	cout << "bestmove " << best->mMove << endl;
 	myfile << ">" << "bestmove " << best->mMove << "\n";
 	myfile.flush();

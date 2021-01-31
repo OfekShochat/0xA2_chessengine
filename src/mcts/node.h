@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 #include <mutex>
 #include "evaluate.h"
+#include "chess/thc.h"
 using namespace std;
 
 class Node {
@@ -37,21 +38,7 @@ class Node {
     */
 
 public:
-    Node(string b, string m = "", Node* p = NULL);
-    Node* mParent;
-    string mMove;
-    string mBoard;
-    
-    mutex m;
-    int n = 0;
-    float q = 0;
-    float w = 0;
-    bool turn = false;
-    bool ThreadMaster = false;
-    // default values for first seen search
-    bool is_expanded = false;
-    vector<Node*> children = {};
-    bool inUse = false;
+    Node(thc::ChessRules b, string m = "", Node* p = NULL);
     // function definition
     ~Node();
     void update(float result);
@@ -63,7 +50,23 @@ public:
     int root_depth();
     int ABn = 0;
     Node* select();
+public:
+    Node* mParent;
+    string mMove;
+    thc::ChessRules mBoard;
+
+    int n = 0;
+    float q = 0;
+    float w = 0;
+    bool turn = false;
+    bool ThreadMaster = false;
+    // default values for first seen search
+    bool is_expanded = false;
+    vector<Node*> children = {};
+
 private:
     double ucb1();
+    mutex mChildrenMutex;
+
     //float AB(string fen, float alpha, float beta, int depth, int turn);
 };

@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 #include <chrono>
 #include <thread>
+#include "chess/thc.h"
 //#include "../neural/tensorflow/use.h"
 
 using namespace chrono;
@@ -37,7 +38,8 @@ public:
 	int n = 0;
 	bool timemanage;
 	// defining root
-	Node* root = new Node(mBoard);
+	thc::ChessRules cr;
+	Node* root = new Node(cr);
 
 	// functions/methods
 	Node* go();
