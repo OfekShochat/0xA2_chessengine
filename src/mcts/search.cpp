@@ -43,7 +43,7 @@ Search::Search(string b, int d, int n, int tt, bool stimemm) {
 }
 
 Node* Search::go() {
-    Node* root = new Node(cr);
+    root = new Node(cr);
     cout << "ddd: " << root->mBoard.ForsythPublish() << endl;
 
     auto st = high_resolution_clock::now();
