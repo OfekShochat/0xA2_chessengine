@@ -39,7 +39,7 @@ public:
 	bool timemanage;
 	// defining root
 	thc::ChessRules cr;
-	Node* root = new Node(cr);
+	Node* root = NULL;
 
 	// functions/methods
 	Node* go();
